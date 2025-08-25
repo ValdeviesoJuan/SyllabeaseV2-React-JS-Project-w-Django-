@@ -16,5 +16,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/react-select": "^5.0.0",
     "@types/select2": "^4.0.63"
+    "flowbite": "^3.1.2",
+    "flowbite-react": "^0.12.7"
   }
 }

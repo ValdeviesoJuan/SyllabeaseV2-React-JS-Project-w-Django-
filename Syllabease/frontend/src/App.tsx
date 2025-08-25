@@ -3,7 +3,7 @@ import LoginPage from "./views/auth/login";
 import BayanihanLeaderHome from "./views/bayanihan_leader/bayanihan_leader_home";
 import BlSyllabus from "./views/bayanihan_leader/bl_syllabus"; // ✅ import syllabus page
 import BlTos from "./views/bayanihan_leader/bl_tos";
-
+import Home from './views/Chairperson/Home';
 
 function App() {
   return (

@@ -70,7 +70,10 @@ const SyllComment: React.FC<Props> = ({
   cotCosF = {},
 }) => {
   return (
-    <div className="font-thin mt-14 bg-[url('/assets/wave.png')] bg-no-repeat bg-top bg-fixed bg-contain">
+    <div 
+      style={{ backgroundImage: "url('/assets/Wave.png')" }} 
+      className="font-thin mt-14 bg-no-repeat bg-top bg-fixed bg-contain"
+    >
       {/* Finish Button */}
       <div className="flex justify-end mr-32 mb-4">
         <Button color="blue" className="w-[130px] flex items-center justify-center space-x-2">

@@ -67,10 +67,11 @@ export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, 
 
   return (
     <div
+      style={{ backgroundImage: "url('/assets/Wave.png')" }}
       className={[
         "min-h-screen p-4 md:p-6",
         "bg-[#EEEEEE]",
-        "bg-[url('/assets/wave.png')] bg-no-repeat bg-top bg-contain bg-fixed",
+        "bg-no-repeat bg-top bg-contain bg-fixed",
         className ?? "",
       ].join(" ")}
     >

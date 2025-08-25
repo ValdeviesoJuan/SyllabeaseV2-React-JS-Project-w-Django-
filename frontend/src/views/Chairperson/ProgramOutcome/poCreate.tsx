@@ -36,7 +36,7 @@ export default function PoCreate() {
     <div
       className="m-auto bg-slate-100 mt-[120px] p-2 shadow-lg bg-gradient-to-r from-[#FFF] to-[#dbeafe] rounded-lg w-11/12"
       style={{
-        backgroundImage: "url('/assets/wave.png')",
+        backgroundImage: "url('/assets/Wave.png')",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

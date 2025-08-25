@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Label, TextInput, Button } from "flowbite-react";
 import { UserIcon, LockClosedIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
@@ -10,7 +11,7 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log({ email, password });
-  };
+  }; 
 
   return (
     <div className="bg-white font-sans overflow-hidden">

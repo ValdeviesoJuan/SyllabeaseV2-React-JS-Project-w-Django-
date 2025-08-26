@@ -1,6 +1,8 @@
 
 import React, { useState } from "react";
 import "../../../index.css";
+import DeanSidebar from "../../layouts/deanSidebar";
+import DeanHeader from "../../layouts/deanHeader";
 
 // Mock data for chairpersons
 const mockChairs = [
@@ -38,9 +40,14 @@ const ChairPerson: React.FC = () => {
 	};
 
 	return (
+<div className="flex">
+	  {/* Sidebar and Header */}
+	  <DeanSidebar />
+	  <DeanHeader children={undefined} />
+	  <div className="flex-1">
 		<div className="p-4 pb-4 shadow bg-white border-dashed rounded-lg dark:border-gray-700 mt-14 min-h-screen" style={{ backgroundImage: 'url(/assets/Wave.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'top', backgroundAttachment: 'fixed', backgroundSize: 'contain', backgroundColor: '#EEEEEE' }}>
 			<div className="flex justify-center align-items-center">
-				<div className="min-w-full inline-block align-middle">
+				<div className="pt-10 pl-52 w-full max-w-6xl">
 					<div className="overflow-hidden">
 						<div className="flex justify-between items-center mb-2 mt-2">
 							<h2 className="font-bold text-4xl text-[#201B50]">Chairperson</h2>
@@ -59,14 +66,14 @@ const ChairPerson: React.FC = () => {
 							</button>
 						</div>
 						<div className="overflow-x-auto w-full pt-6">
-							<table className="w-full mt-12 bg-white shadow-lg text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-								<thead className="rounded text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+							<table className="w-full mt-12 bg-blue-500 shadow-lg text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg">
+								<thead className="rounded text-xs text-white uppercase bg-blue5 dark:bg-gray-700 dark:text-gray-400">
 									<tr className="bg-blue text-sm text-white">
 										<th className="bg-blue5 rounded-tl-lg px-6 py-3">Name</th>
 										<th className="bg-blue5 px-6 py-3">Department Code</th>
 										<th className="bg-blue5 px-6 py-3">Start of Validity</th>
 										<th className="bg-blue5 px-6 py-3">End of Validity</th>
-										<th className="bg-blue5 px-6 py-3"></th>
+										<th className="bg-blue5 px-6 py-3">Action</th>
 										<th className="bg-blue5 rounded-tr-lg px-6 py-3"></th>
 									</tr>
 								</thead>
@@ -82,15 +89,14 @@ const ChairPerson: React.FC = () => {
 											<td className="px-6 py-4">{chair.end_validity}</td>
 											<td>
 												<button
-													className="text-green font-medium hover:scale-105 mt-1"
-													onClick={() => handleEdit(chair.ur_id)}
-												>
+													className="text-green-400 font-medium hover:scale-105 pl-6"
+													onClick={() => handleEdit(chair.ur_id)}>
 													Edit
 												</button>
 											</td>
 											<td>
 												<button
-													className="text-red font-medium hover:scale-105 mt-1"
+													className="text-red-400 font-medium hover:scale-105 pr-6"
 													onClick={() => handleDelete(chair.ur_id)}
 												>
 													Delete
@@ -111,6 +117,8 @@ const ChairPerson: React.FC = () => {
 				</div>
 			</div>
 		</div>
+	  </div>
+</div>
 	);
 };
 

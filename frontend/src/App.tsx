@@ -9,6 +9,17 @@ import DlCreate from "./views/dean/deadline/dlCreate";
 import DeanHome from "./views/dean/home";
 import DLUpdate from "./views/dean/deadline/dlEdit";
 import DLList from "./views/dean/deadline/dlList";
+import CreateDepartment from "./views/dean/department/departmentHome";
+import EditDepartment from "./views/dean/department/deparmentEdit";
+import DepartmentHome from "./views/dean/department/deparmentHome";
+import SylList from "./views/dean/syllabus/sylList";
+import SylView from "./views/dean/syllabus/sylView";
+
+
+
+
+
+
 
 function App() {
   return (
@@ -24,6 +35,14 @@ function App() {
         <Route path="/dean/deadline/create" element={<DlCreate />} />
         <Route path="/dean/deadline/edit" element={<DLUpdate />} />
         <Route path="/dean/deadline/list" element={<DLList />} />
+        <Route path="/dean/department/create" element={<CreateDepartment />} />
+        <Route path="/dean/department/edit" element={<EditDepartment />} />
+        <Route path="/dean/department/home" element={<DepartmentHome />} />
+        <Route path="/dean/syllabus/list" element={<SylList />} />
+       
+        <Route path="/dean/syllabus/view" element={<SylView />} />
+        
+
 
       </Routes>
     </Router>

@@ -61,7 +61,6 @@ const BtCreate: React.FC = () => {
   };
 
   return (
-    <ChairSidebarLayout>
     <div className="p-4 pb-10 flex items-center justify-center mt-14">
       <div className="max-w-md bg-gradient-to-r from-[#FFF] to-[#dbeafe] w-[560px] p-6 px-8 rounded-lg shadow-lg relative">
         <img
@@ -191,7 +190,6 @@ const BtCreate: React.FC = () => {
         )}
       </div>
     </div>
-    </ChairSidebarLayout>
   );
 };
 

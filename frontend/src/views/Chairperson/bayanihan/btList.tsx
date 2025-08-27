@@ -32,7 +32,6 @@ const BtList: React.FC = () => {
   };
 
   return (
-    <ChairSidebarLayout>
       <div
         className="min-h-screen pt-14 bg-[#EEEEEE]"
         style={{
@@ -126,7 +125,6 @@ const BtList: React.FC = () => {
           </div>
         </div>
       </div>
-    </ChairSidebarLayout>
   );
 };
 

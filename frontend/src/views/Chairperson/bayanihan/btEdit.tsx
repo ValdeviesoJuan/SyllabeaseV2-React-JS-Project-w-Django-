@@ -124,24 +124,19 @@ const EditBayanihanTeam: React.FC = () => {
 
   if (loading) {
     return (
-      <ChairSidebarLayout>
         <div className="min-h-screen flex items-center justify-center">Loading...</div>
-      </ChairSidebarLayout>
     );
   }
 
   if (!bGroup) {
     return (
-      <ChairSidebarLayout>
         <div className="min-h-screen flex items-center justify-center text-red-600">
           Team not found.
         </div>
-      </ChairSidebarLayout>
     );
   }
 
   return (
-    <ChairSidebarLayout>
       <div
         className="min-h-screen pt-14"
         style={{
@@ -270,7 +265,6 @@ const EditBayanihanTeam: React.FC = () => {
           </div>
         </div>
       </div>
-    </ChairSidebarLayout>
   );
 };
 

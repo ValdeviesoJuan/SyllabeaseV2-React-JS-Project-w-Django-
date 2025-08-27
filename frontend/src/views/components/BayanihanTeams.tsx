@@ -1,292 +1,243 @@
-// components/BayanihanTeams.tsx
-import React, { useState, useMemo } from "react";
-import {
-  Pagination,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableHeadCell,
-  Select,
-  TextInput,
-} from "flowbite-react";
-import { HiOutlineSearch } from "react-icons/hi";
+import React, { useState } from "react";
 
-// -----------------------------
-// Types
-// -----------------------------
-type User = { id: number; firstname: string; lastname: string };
-type Course = { course_code: string; course_title: string };
-type BayanihanGroup = {
-  bg_id: number;
-  course_code: string;
+
+interface Syllabus {
+  syll_id: number;
   course_title: string;
-  bg_school_year: string;
-  course_semester: "1st Semester" | "2nd Semester" | "Mid Year";
-};
-type Filters = {
-  search: string;
   course_code: string;
   bg_school_year: string;
   course_semester: string;
-  leader_user_id: string;
-  member_user_id: string;
-};
+  chair_submitted_at: string;
+  dean_approved_at: string;
+  version: number;
+  status: string;
+}
 
-// -----------------------------
-// Mock Data
-// -----------------------------
-const USERS: User[] = [
-  { id: 1, firstname: "Alex", lastname: "Santos" },
-  { id: 2, firstname: "Bea", lastname: "Reyes" },
-  { id: 3, firstname: "Carl", lastname: "Lopez" },
-  { id: 4, firstname: "Dina", lastname: "Garcia" },
-  { id: 5, firstname: "Evan", lastname: "Cruz" },
-  { id: 6, firstname: "Faith", lastname: "Lim" },
-  { id: 7, firstname: "Gio", lastname: "Aquino" },
-];
+interface Props {
+  syllabi: Syllabus[];
+  departments: string[]; // department_code array
+}
 
-const COURSES: Course[] = [
-  { course_code: "CS101", course_title: "Intro to Computer Science" },
-  { course_code: "IT202", course_title: "Web Development" },
-  { course_code: "SE303", course_title: "Software Engineering" },
-  { course_code: "DS404", course_title: "Data Science" },
-  { course_code: "AI505", course_title: "Artificial Intelligence" },
-];
-
-const SY_OPTIONS = ["2023-2024", "2024-2025", "2025-2026", "2026-2027", "2027-2028"];
-
-const SEM_OPTIONS: BayanihanGroup["course_semester"][] = [
-  "1st Semester",
-  "2nd Semester",
-  "Mid Year",
-];
-
-const BGROUPS: BayanihanGroup[] = [
-  {
-    bg_id: 1001,
-    course_code: "CS101",
-    course_title: "Intro to Computer Science",
-    bg_school_year: "2024-2025",
-    course_semester: "1st Semester",
-  },
-  {
-    bg_id: 1002,
-    course_code: "IT202",
-    course_title: "Web Development",
-    bg_school_year: "2024-2025",
-    course_semester: "2nd Semester",
-  },
-  {
-    bg_id: 1003,
-    course_code: "SE303",
-    course_title: "Software Engineering",
-    bg_school_year: "2025-2026",
-    course_semester: "1st Semester",
-  },
-];
-
-const BLEADERS: Record<number, User[]> = {
-  1001: [USERS[0], USERS[2]],
-  1002: [USERS[1]],
-  1003: [USERS[3]],
-};
-
-const BMEMBERS: Record<number, User[]> = {
-  1001: [USERS[4], USERS[5]],
-  1002: [USERS[6]],
-  1003: [USERS[0], USERS[1]],
-};
-
-// ✅ Cast as a proper icon component for Flowbite TextInput
-const SearchIcon = HiOutlineSearch as unknown as React.FC<
-  React.ComponentProps<"svg">
->;
-// -----------------------------
-// Component
-// -----------------------------
-const BayanihanTeams: React.FC = () => {
-  const [filters, setFilters] = useState<Filters>({
-    search: "",
-    course_code: "",
-    bg_school_year: "",
+const BayanihanTeams: React.FC<Props> = ({ syllabi, departments }) => {
+  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState({
+    course_year_level: "",
     course_semester: "",
-    leader_user_id: "",
-    member_user_id: "",
+    bg_school_year: "",
+    department_code: "",
+    status: "",
   });
-  const [currentPage, setCurrentPage] = useState(1);
-  const perPage = 5;
 
-  // Filtering logic
-  const filteredData = useMemo(() => {
-    return BGROUPS.filter((bg) => {
-      const searchMatch =
-        filters.search === "" ||
-        bg.course_code.toLowerCase().includes(filters.search.toLowerCase()) ||
-        bg.course_title.toLowerCase().includes(filters.search.toLowerCase());
+  const applyFilters = () => {
+    console.log("Apply filters:", { search, ...filters });
+    // later replace with API call
+  };
 
-      const courseMatch =
-        filters.course_code === "" || bg.course_code === filters.course_code;
+  const statusStyles: Record<string, string> = {
+    Draft: "bg-gray-300 text-gray-600 border-gray-400",
+    "Pending Chair Review": "bg-amber-100 text-amber-700 border-amber-300",
+    "Returned by Chair": "bg-rose-200 text-rose-600 border-rose-400",
+    "Requires Revision (Chair)": "bg-red-200 text-red-600 border-red-400",
+    "Revised for Chair": "bg-blue-100 text-blue-600 border-blue-300",
+    "Approved by Chair": "bg-green-200 text-green-700 border-green-400",
+    "Returned by Dean": "bg-rose-300 text-rose-800 border-rose-400",
+    "Requires Revision (Dean)": "bg-pink-200 text-pink-600 border-pink-400",
+    "Revised for Dean": "bg-blue-200 text-blue-700 border-blue-400",
+    "Approved by Dean": "bg-emerald-200 text-emerald-700 border-emerald-400",
+  };
 
-      const syMatch =
-        filters.bg_school_year === "" || bg.bg_school_year === filters.bg_school_year;
-
-      const semMatch =
-        filters.course_semester === "" || bg.course_semester === filters.course_semester;
-
-      const leaderMatch =
-        filters.leader_user_id === "" ||
-        (BLEADERS[bg.bg_id] || []).some((u) => String(u.id) === filters.leader_user_id);
-
-      const memberMatch =
-        filters.member_user_id === "" ||
-        (BMEMBERS[bg.bg_id] || []).some((u) => String(u.id) === filters.member_user_id);
-
-      return searchMatch && courseMatch && syMatch && semMatch && leaderMatch && memberMatch;
-    });
-  }, [filters]);
-
-  const paginated = useMemo(() => {
-    const start = (currentPage - 1) * perPage;
-    return filteredData.slice(start, start + perPage);
-  }, [filteredData, currentPage]);
-
-  // -----------------------------
-  // Render
-  // -----------------------------
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      {/* ✅ Search bar aligned right */}
-      <div className="flex justify-end mb-4">
-        <TextInput
-            icon={SearchIcon}
-            placeholder="Search..."
-            value={filters.search}
-            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-            onKeyDown={(e) => e.key === "Enter" && setCurrentPage(1)}
-            className="w-64"
-        />
-      </div>
+    <div className="flex min-h-screen">
+   
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+       
+    
+        {/* Page Content */}
+        <div className="p-6 text-left">
+          {/* Filters */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            {/* Search input */}
+            <div className="relative w-[12%]">
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && applyFilters()}
+                className="border focus:outline-none focus:border-blue border-black w-full rounded p-1 pr-10"
+                placeholder="Search..."
+              />
+              <button
+                type="button"
+                onClick={applyFilters}
+                className="absolute inset-y-0 right-0 flex items-center px-2"
+              >
+                <svg
+                  width="24px"
+                  height="24px"
+                  className="rounded-lg p-[2px]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                    stroke="#2468d2"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
 
-      {/* Filters */}
-      <div className="grid grid-cols-4 gap-4 mb-6 min-w-0">
-        <div className="">
-            <Select
-            className=""
-            value={filters.course_code}
-            onChange={(e) => setFilters({ ...filters, course_code: e.target.value })}
+            {/* Year level */}
+            <select
+              value={filters.course_year_level}
+              onChange={(e) =>
+                setFilters({ ...filters, course_year_level: e.target.value })
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue rounded p-1 w-[14%]"
             >
-            <option value="">All Courses</option>
-            {COURSES.map((c) => (
-                <option key={c.course_code} value={c.course_code}>
-                {c.course_code} - {c.course_title}
-                </option>
-            ))}
-            </Select>
-        </div>
+              <option value="">Year level (All)</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+              <option value="5th Year">5th Year</option>
+            </select>
 
-        <div className="">
-            <Select
-            className=""
-            value={filters.bg_school_year}
-            onChange={(e) => setFilters({ ...filters, bg_school_year: e.target.value })}
+            {/* Semester */}
+            <select
+              value={filters.course_semester}
+              onChange={(e) =>
+                setFilters({ ...filters, course_semester: e.target.value })
+              }
+              className="border focus:outline-none focus:border-blue cursor-pointer rounded p-1 w-[14%]"
             >
-            <option value="">All School Years</option>
-            {SY_OPTIONS.map((sy) => (
-                <option key={sy} value={sy}>
-                {sy}
-                </option>
-            ))}
-            </Select>
-        </div>
+              <option value="">Semester(All)</option>
+              <option value="1st Semester">1st Semester</option>
+              <option value="2nd Semester">2nd Semester</option>
+              <option value="Mid Year">Mid Year</option>
+            </select>
 
-        <div className="">
-            <Select
-            className=""
-            value={filters.course_semester}
-            onChange={(e) => setFilters({ ...filters, course_semester: e.target.value })}
+            {/* School Year */}
+            <select
+              value={filters.bg_school_year}
+              onChange={(e) =>
+                setFilters({ ...filters, bg_school_year: e.target.value })
+              }
+              className="border focus:outline-none focus:border-blue cursor-pointer rounded p-1 w-[15%]"
             >
-            <option value="">All Semesters</option>
-            {SEM_OPTIONS.map((sem) => (
-                <option key={sem} value={sem}>
-                {sem}
-                </option>
-            ))}
-            </Select>
-        </div>
+              <option value="">School Year(All)</option>
+              <option value="2019-2020">2019-2020</option>
+              <option value="2020-2021">2020-2021</option>
+              <option value="2021-2022">2021-2022</option>
+              <option value="2023-2024">2023-2024</option>
+            </select>
 
-        <div className="">
-            <Select
-            className=""
-            value={filters.leader_user_id}
-            onChange={(e) => setFilters({ ...filters, leader_user_id: e.target.value })}
+            {/* Department */}
+            <select
+              value={filters.department_code}
+              onChange={(e) =>
+                setFilters({ ...filters, department_code: e.target.value })
+              }
+              className="border focus:outline-none focus:border-blue cursor-pointer rounded p-1 w-[16%]"
             >
-            <option value="">All Leaders</option>
-            {USERS.map((u) => (
-                <option key={u.id} value={u.id}>
-                {u.firstname} {u.lastname}
+              <option value="">Departments(All)</option>
+              {departments.map((dep) => (
+                <option key={dep} value={dep}>
+                  {dep}
                 </option>
-            ))}
-            </Select>
-        </div>
+              ))}
+            </select>
 
-        <div className="">
-            <Select
-            className=""
-            value={filters.member_user_id}
-            onChange={(e) => setFilters({ ...filters, member_user_id: e.target.value })}
+            {/* Status */}
+            <select
+              value={filters.status}
+              onChange={(e) =>
+                setFilters({ ...filters, status: e.target.value })
+              }
+              className="border focus:outline-none focus:border-blue cursor-pointer rounded p-1 w-[9%]"
             >
-            <option value="">All Members</option>
-            {USERS.map((u) => (
-                <option key={u.id} value={u.id}>
-                {u.firstname} {u.lastname}
-                </option>
-            ))}
-            </Select>
+              <option value="">Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved by Chair">Approved by Chair</option>
+              <option value="Returned by Chair">Returned by Chair</option>
+              <option value="Approved by Dean">Approved by Dean</option>
+              <option value="Returned by Dean">Returned by Dean</option>
+            </select>
+
+            {/* Apply button */}
+            <button
+              onClick={applyFilters}
+              className="bg-blue-500 hover:bg-blue focus:outline-none focus:border-blue cursor-pointer rounded text-white p-[4px] px-4"
+            >
+              Apply Filters
+            </button>
+          </div>
+
+          {/* Table */}
+          <table className="w-full text-sm text-left text-gray-500 shadow-lg mb-8">
+            <thead className="text-xs text-white uppercase bg-blue-500">
+              <tr className="text-white text-sm pb-2">
+                <th className="pl-2 rounded-tl-lg">Course Title</th>
+                <th>Course Code</th>
+                <th>School Year</th>
+                <th>Semester</th>
+                <th>Submitted At</th>
+                <th>Approved At</th>
+                <th>Version</th>
+                <th>Status</th>
+                <th className="px-6 py-3 rounded-tr-lg">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#e5e7eb]">
+              {syllabi.length > 0 ? (
+                syllabi.map((syllabus, idx) => (
+                  <tr
+                    key={syllabus.syll_id}
+                    className={`${idx % 2 === 0 ? "bg-[#e9edf7]" : "bg-white"} hover:bg-gray4`}
+                  >
+                    <td className="font-semibold pl-2">{syllabus.course_title}</td>
+                    <td>{syllabus.course_code}</td>
+                    <td>{syllabus.bg_school_year}</td>
+                    <td>{syllabus.course_semester}</td>
+                    <td>{syllabus.chair_submitted_at}</td>
+                    <td>{syllabus.dean_approved_at}</td>
+                    <td>Version {syllabus.version}</td>
+                    <td>
+                      <div
+                        className={`w-full text-center px-1 py-1 border-2 rounded-lg ${
+                          statusStyles[syllabus.status] || "bg-gray-200 text-gray-600"
+                        }`}
+                      >
+                        {syllabus.status}
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() =>
+                          (window.location.href = `/dean/syllabus/view/${syllabus.syll_id}`)
+                        }
+                        className="bg-blue5 w-[80%] hover:bg-blue3 py-1 rounded-lg text-lg text-white cursor-pointer font-semibold shadow-lg"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={9} className="text-center py-4 text-gray-500">
+                    No Bayanihan Teams found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+          {/* Pagination placeholder */}
         </div>
-    </div>
-
-      {/* Table */}
-      <Table striped>
-        <TableHead>
-          <TableHeadCell>Course Code</TableHeadCell>
-          <TableHeadCell>Course Title</TableHeadCell>
-          <TableHeadCell>School Year</TableHeadCell>
-          <TableHeadCell>Semester</TableHeadCell>
-          <TableHeadCell>Leaders</TableHeadCell>
-          <TableHeadCell>Members</TableHeadCell>
-        </TableHead>
-
-        <TableBody>
-          {paginated.map((bg) => (
-            <TableRow key={bg.bg_id}>
-              <TableCell>{bg.course_code}</TableCell>
-              <TableCell>{bg.course_title}</TableCell>
-              <TableCell>{bg.bg_school_year}</TableCell>
-              <TableCell>{bg.course_semester}</TableCell>
-              <TableCell>
-                {(BLEADERS[bg.bg_id] || [])
-                  .map((u) => `${u.firstname} ${u.lastname}`)
-                  .join(", ")}
-              </TableCell>
-              <TableCell>
-                {(BMEMBERS[bg.bg_id] || [])
-                  .map((u) => `${u.firstname} ${u.lastname}`)
-                  .join(", ")}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      {/* Pagination */}
-      <div className="flex justify-end mt-4">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(filteredData.length / perPage)}
-          onPageChange={setCurrentPage}
-        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Textarea } from "flowbite-react";
-import ustpLogo from "../../../assets/ustplogo.png"; // adjust path as needed
+import ustpLogo from "../assets/ustplogo.png"; // adjust path as needed
 
 // Types
 type ReviewItem = {
@@ -249,7 +249,7 @@ const ReviewForm: React.FC = () => {
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-start space-x-2 w-[70%]">
             <div className="w-20 ml-6 mt-4">
-              <img src={ustpLogo} alt="USTP Logo" className="w-full h-auto" />
+              <img src="/assets/ustplogo.png" alt="USTP Logo" className="w-full h-auto" />
             </div>
             <div>
               <h1 className="text-sm font-bold uppercase leading-tight ml-6 mt-2">
@@ -315,7 +315,7 @@ const ReviewForm: React.FC = () => {
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-start space-x-2 w-[70%]">
             <div className="w-20 ml-6 mt-4">
-              <img src={ustpLogo} alt="USTP Logo" className="w-full h-auto" />
+              <img src="/assets/ustplogo.png" alt="USTP Logo" className="w-full h-auto" />
             </div>
             <div>
               <h1 className="text-sm font-bold uppercase leading-tight ml-6 mt-2">

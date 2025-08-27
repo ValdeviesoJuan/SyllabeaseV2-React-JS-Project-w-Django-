@@ -1,25 +1,28 @@
-// frontend/src/views/components/Modal.tsx
-import React, { FC } from "react";
+import React from "react";
+import { Modal as FlowbiteModal, Button } from "flowbite-react";
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  children?: React.ReactNode;
+interface Props {
+  show: boolean;                  // whether modal is open
+  title: string;                  // modal title
+  onClose: () => void;            // close callback
+  onSubmit: () => void;           // submit callback
+  children?: React.ReactNode;     // allow inner JSX content
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, title = "Modal", children }) => {
-  if (!isOpen) return null;
+const Modal: React.FC<Props> = ({ show, title, onClose, onSubmit, children }) => {
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-2xl p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <button onClick={onClose} className="text-gray-600 hover:text-gray-900">Close</button>
+    <FlowbiteModal show={show} size="md" popup={true} onClose={onClose}>
+      <div className="p-6">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">{title}</h3>
+        <div className="mb-4">{children}</div>
+        <div className="flex justify-end gap-2">
+          <Button color="gray" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={onSubmit}>Save</Button>
         </div>
-        <div>{children}</div>
       </div>
-    </div>
+    </FlowbiteModal>
   );
 };
 

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import ustpLogo from "../../../assets/ustplogo.png"; // adjust path as needed
+import ustpLogo from "../assets/ustplogo.png"; // adjust path as needed
+import ChairSidebar from "../../layouts/chairSidebar";
+import ChairpersonNav from "../../layouts/chairpersonNav";
+import { useNavigate } from "react-router-dom";
 
 // Mocked data (replace with API/props when backend is ready)
 const syll = {
@@ -134,9 +137,61 @@ const remarks = {
 
 type RemarkKey = keyof typeof remarks;
 
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+interface Notification {
+  id: string;
+  data: {
+    for: string;
+    course_code: string;
+    bg_school_year: string;
+    message: string;
+    action_url: string;
+  };
+  created_at: Date;
+}
+
+const mockUser: User = {
+  firstname: "John",
+  lastname: "Doe",
+  email: "john.doe@example.com",
+};
+
+const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    data: {
+      for: "CS",
+      course_code: "CS101",
+      bg_school_year: "2024-2025",
+      message: "New syllabus submitted for review",
+      action_url: "/syllabus/1",
+    },
+    created_at: new Date("2024-01-15T10:30:00"),
+  },
+];
+
 const SyllView: React.FC = () => {
   // State for remark bubbles
   const [openRemark, setOpenRemark] = useState<RemarkKey | null>(null);
+  const [notifications] = useState<Notification[]>(mockNotifications);
+  const [user] = useState<User>(mockUser);
+  const navigate = useNavigate();
+  const [activeRoute, setActiveRoute] = useState<string>("syllView");
+
+  const handleRouteChange = (route: string) => {
+    setActiveRoute(route);
+    console.log(`Navigating to: ${route}`);
+  };
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+  };
+
 
   // State for feedback modal
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -145,7 +200,7 @@ const SyllView: React.FC = () => {
   let banner = null;
   if (syll.chair_submitted_at && !syll.dean_submitted_at && !syll.chair_rejected_at) {
     banner = (
-      <div className="flex justify-end mr-28">
+      <div className="flex justify-end mr-28 mt-4">
         <button className="rounded bg-green-100 text-green-700 px-3 py-3 flex items-center gap-2 hover:bg-green-200 transition">
           <svg width="20px" height="20px" viewBox="0 -0.5 28 28" fill="#31a858">
             <g>
@@ -201,15 +256,35 @@ const SyllView: React.FC = () => {
   return (
     <div
       className="font-thin mt-14 min-h-screen"
-      style={{
-        backgroundImage: "url('/assets/Wave.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top",
-        backgroundAttachment: "fixed",
-        backgroundSize: "contain",
-      }}
     >
-      {banner}
+     {/* Navigation bar */}
+          <ChairpersonNav
+            user={user}
+            notifications={notifications}
+            activeRoute={activeRoute}
+            handleRouteChange={handleRouteChange}
+            handleLogout={handleLogout}
+          />
+      <div
+        className="absolute"
+        style={{
+          top: "57px", // distance from top (nav bar height)
+          backgroundImage: "url('/assets/Wave.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "top",
+          backgroundAttachment: "fixed",
+          backgroundSize: "contain",
+        }}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => navigate("/chairperson/home")}
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black rounded ml-2"
+          >
+            Back
+          </button>
+          {banner}
+        </div>
       <div className="mx-auto mt-6 w-11/12 border-[3px] border-black bg-white font-serif text-sm p-4 relative">
         {/* HEADER SECTION */}
         <div className="flex justify-center items-start mb-4">
@@ -217,7 +292,7 @@ const SyllView: React.FC = () => {
             {/* LEFT: Logo + Campus Info */}
             <div className="flex items-start space-x-4 w-[70%]">
               <div>
-                <img src={ustpLogo} alt="USTP Logo" className="w-20 h-auto" />
+                <img src="/assets/ustplogo.png" alt="USTP Logo" className="w-20 h-auto" />
               </div>
               <div>
                 <h1 className="text-md font-bold uppercase leading-tight ml-11 p-2">
@@ -231,7 +306,7 @@ const SyllView: React.FC = () => {
             {/* RIGHT: Document Info Table */}
             <table className="text-xs text-center border border-gray-400 ml-20">
               <thead>
-                <tr className="bg-[#5A6E99] text-white">
+                <tr className="bg-[#5A6E99] text-black">
                   <th colSpan={3} className="border border-gray-400 px-3 py-1 text-xs font-semibold">
                     Document Code No.
                   </th>
@@ -243,7 +318,7 @@ const SyllView: React.FC = () => {
                     FM-USTP-ACAD-01
                   </td>
                 </tr>
-                <tr className="bg-[#5A6E99] text-white">
+                <tr className="bg-[#5A6E99] text-black">
                   <td className="border border-gray-400 px-2 py-1 font-medium">Rev. No.</td>
                   <td className="border border-gray-400 px-2 py-1 font-medium">Effective Date</td>
                   <td className="border border-gray-400 px-2 py-1 font-medium">Page No.</td>
@@ -616,6 +691,9 @@ const SyllView: React.FC = () => {
           </div>
         )}
       </div>
+      </div>
+      
+      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import ustpLogo from "../../../assets/ustplogo.png"; // Adjust path as needed
+import ustpLogo from "../assets/ustplogo.png"; // Adjust path as needed
 
 // Mocked data (replace with props or API when backend is ready)
 const syllabus = {

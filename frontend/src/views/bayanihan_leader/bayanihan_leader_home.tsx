@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "flowbite-react";
-import BlSidebar from "../../layouts/bl_sidebar"; // import the sidebar
+import BlSidebar from "../layouts/bl_sidebar";
+import BlHeader from "../layouts/bl_header";
+
 
 interface Syllabus {
   id: number;
@@ -91,30 +93,22 @@ export default function Dashboard({
   };
 
   return (
-    <div className="flex">
+    <div
+      className="flex min-h-screen w-full bg-cover bg-no-repeat bg-center"
+      style={{ backgroundImage: "url('/assets/Wave.png')" }}
+    >
       {/* Sidebar */}
       <BlSidebar />
+  
+
       {/* Main Dashboard Content */}
-      <div
-        style={{ backgroundImage: "url('/assets/Wave.png')" }}>
-        {/* Floating Alert */}
-        <div className="absolute z-50 top-10 left-1/2 -translate-x-1/2 w-[500px] p-4 rounded-lg shadow-lg border border-yellow-400 bg-yellow-100 text-green-600">
-          <div className="space-y-3 text-sm font-semibold">
-            <div className="flex justify-between items-center">
-              <span>
-                <strong>Notice:</strong> You have a new deadline notification.
-              </span>
-              <Button size="xs" color="warning">
-                Dismiss
-              </Button>
-            </div>
-          </div>
-        </div>
+      <div className="flex-1 absolute">
+      <BlHeader />
 
         {/* Cards Section */}
-        <div className="flex gap-6 mt-20">
+        <div className="flex gap-6 mt-20 relative left-[325px]">
           {/* Card - No. of Syllabus */}
-          <div className="flex items-center bg-white rounded shadow-xl hover:scale-105 transition">
+          <div className="flex items-center bg-white rounded-lg shadow-xl hover:scale-105 transition">
             <div className="m-5 bg-blue-100 rounded-full p-4">
               <svg
                 fill="#2262c6"
@@ -135,7 +129,7 @@ export default function Dashboard({
           </div>
 
           {/* Card - Completed */}
-          <div className="flex items-center bg-white rounded shadow-xl hover:scale-105 transition">
+          <div className="flex items-center bg-white rounded-lg shadow-xl hover:scale-105 transition">
             <div className="m-5 bg-green-100 rounded-full p-4">
               <svg
                 width="40"
@@ -158,7 +152,7 @@ export default function Dashboard({
           </div>
 
           {/* Card - Pending */}
-          <div className="flex items-center bg-white rounded shadow-xl hover:scale-105 transition">
+          <div className="flex items-center bg-white rounded-lg shadow-xl hover:scale-105 transition">
             <div className="m-5 bg-yellow-100 rounded-full p-4">
               <svg
                 fill="#f0a222"
@@ -183,7 +177,7 @@ export default function Dashboard({
         </div>
 
         {/* Syllabi Section with Table */}
-        <div className="mt-20 p-8 bg-slate-100 shadow-lg rounded-lg w-full">
+        <div className="absolute top-[225px] left-[325px] p-6 pr-3 shadow bg-white border-dashed rounded-lg dark:border-gray-700 w-[1080px] h-[450px]">
           <div className="text-blue-600 text-2xl font-semibold mb-4">Syllabi</div>
 
           <div className="flex gap-6 py-4">
@@ -244,6 +238,7 @@ export default function Dashboard({
           </div>
         </div>
 
+        {/* Example: Countdown (disabled for now) */}
         {/*
         {dueDate && (
           <div className="mt-4 text-center text-red-500 font-semibold">

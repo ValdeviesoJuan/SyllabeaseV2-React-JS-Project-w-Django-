@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ustpLogo from "../assets/ustplogo.png"; // adjust path as needed
-import ChairSidebar from "../../layouts/chairSidebar";
-import ChairpersonNav from "../../layouts/chairpersonNav";
+import ChairSidbarSyllabus from "../../layouts/chairSidebarSyllabus";
 import { useNavigate } from "react-router-dom";
+import { HiArrowDownTray } from "react-icons/hi2";
+
 
 // Mocked data (replace with API/props when backend is ready)
 const syll = {
@@ -201,18 +201,11 @@ const SyllView: React.FC = () => {
   if (syll.chair_submitted_at && !syll.dean_submitted_at && !syll.chair_rejected_at) {
     banner = (
       <div className="flex justify-end mr-28 mt-4">
-        <button className="rounded bg-green-100 text-green-700 px-3 py-3 flex items-center gap-2 hover:bg-green-200 transition">
-          <svg width="20px" height="20px" viewBox="0 -0.5 28 28" fill="#31a858">
-            <g>
-              <path d="M168,624.695 L179.2,641.99 L156.8,641.99 L168,624.695 L168,624.695 Z M156.014,643.995 L180.018,643.995 C182.375,643.995 182.296,642.608 181.628,641.574 L169.44,622.555 C168.882,621.771 167.22,621.703 166.56,622.555 L154.372,641.574 C153.768,642.703 153.687,643.995 156.014,643.995 L156.014,643.995 Z M181,645.998 L155,645.998 C154.448,645.998 154,646.446 154,646.999 C154,647.552 154.448,648 155,648 L181,648 C181.552,648 182,647.552 182,646.999 C182,646.446 181.552,645.998 181,645.998 L181,645.998 Z" />
-            </g>
-          </svg>
-          <span>Open Syllabus Review Form</span>
-        </button>
+        
       </div>
     );
   }
-
+  
   // Helper for rendering remark bubbles
   function renderRemarkBubble(key: RemarkKey, label = "Remarks") {
     if (remarks[key]?.srf_yes_no === "no") {
@@ -258,13 +251,7 @@ const SyllView: React.FC = () => {
       className="font-thin mt-14 min-h-screen"
     >
      {/* Navigation bar */}
-          <ChairpersonNav
-            user={user}
-            notifications={notifications}
-            activeRoute={activeRoute}
-            handleRouteChange={handleRouteChange}
-            handleLogout={handleLogout}
-          />
+       <ChairSidbarSyllabus children={undefined} />
       <div
         className="absolute"
         style={{
@@ -276,16 +263,41 @@ const SyllView: React.FC = () => {
           backgroundSize: "contain",
         }}
       >
-        <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={() => navigate("/chairperson/home")}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black rounded ml-2"
-          >
-            Back
-          </button>
-          {banner}
+        <div className="flex items-center justify-between w-full mb-4 ">
+        {/* Back Button at the Left */}
+        <button
+          onClick={() => navigate("/chairperson/home")}
+          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black rounded ml-2"
+        >
+          Back
+        </button>
+
+        {/* Centered Banner */}
+        <div className="flex items-center justify-center flex-1 pt-3">
+        <div className="flex flex-1 justify-center ">
+          <div className="flex flex-col p-2 justify-center items-center text-green bg-green-300 bg-opacity-75 h-[100px] w-[420px] rounded border border-green shadow-md">
+            The syllabus has been approved for the upcoming semester.
+            <div className="mt-2">
+              <a
+              href="#"
+              className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition duration-200"
+            >
+              {HiArrowDownTray({ className: "w-5 h-5" }) as JSX.Element}
+              Export as DOCX
+            </a>
+            </div>
+
+          </div>
         </div>
+
+        {/* Empty div to balance right side (keeps banner centered) */}
+        <div className="w-[100px]"></div>
+      </div>
+      </div>
+
+        
       <div className="mx-auto mt-6 w-11/12 border-[3px] border-black bg-white font-serif text-sm p-4 relative">
+      
         {/* HEADER SECTION */}
         <div className="flex justify-center items-start mb-4">
           <div className="flex justify-between items-start w-full max-w-5xl">
@@ -337,13 +349,13 @@ const SyllView: React.FC = () => {
           <tbody>
             {/* 1st Header */}
             <tr>
-              <th colSpan={2} className="font-medium border-1 border-solid px-4 relative">
+              <th colSpan={2} className="font-medium border-1 border-solid px-4 relative border-black">
                 <span className="font-bold">{syll.college_description}</span>
                 <br />
                 {syll.department_name}
                 {renderRemarkBubble("srf2")}
               </th>
-              <th className="font-medium border-2 border-solid text-left px-4 w-2/6 relative">
+              <th className="font-medium border-2 border-solid border-black text-left px-4 w-2/6 relative">
                 <span className="font-bold underline underline-offset-4">Syllabus<br /></span>
                 Course Title :<span className="font-bold">{syll.course_title}<br /></span>
                 Course Code: {syll.course_code}<br />
@@ -353,9 +365,9 @@ const SyllView: React.FC = () => {
             </tr>
             {/* 2nd Header */}
             <tr>
-              <td className="border-2 border-solid font-medium text-sm text-left px-4 text-justify align-top relative">
+              <td className="border-2 border-solid font-medium text-sm border-black text-left px-4  align-top relative">
                 {/* VISION */}
-                <div className="mt-2 mb-8">
+                <div className="mt-2 mb-8 border-black">
                   <span className="font-bold">USTP Vision<br /><br /></span>
                   <p>The University is a nationally recognized Science and Technology University providing the vital link between education and the economy.</p>
                   {renderRemarkBubble("srf8")}
@@ -370,7 +382,7 @@ const SyllView: React.FC = () => {
                   </ul>
                 </div>
                 {/* POE */}
-                <div className="mb-8 relative">
+                <div className="mb-8 relative border-black">
                   <span className="font-bold">Program Educational Objectives<br /><br /></span>
                   {poes.map((poe) => (
                     <div className="mb-2" key={poe.poe_code}>
@@ -379,7 +391,7 @@ const SyllView: React.FC = () => {
                   ))}
                   {renderRemarkBubble("srf8")}
                 </div>
-                <div className="mb-8">
+                <div className="mb-8 border-black">
                   <span className="font-bold">Program Outcomes<br /><br /></span>
                   {programOutcomes.map((po) => (
                     <div className="mb-5" key={po.po_id}>
@@ -387,63 +399,63 @@ const SyllView: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <table className="table-auto border-2 mb-5">
+                <table className="table-auto border-2 mb-5 border-black">
                   <thead className="border-2">
                     <tr>
-                      <th className="border-2 text-center py-1">Code</th>
-                      <th className="border-2 text-center">Description</th>
+                      <th className="border-2 text-center py-1 border-black">Code</th>
+                      <th className="border-2 text-center border-black ">Description</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border-2 text-center py-2">I</td>
-                      <td className="border-2 text-center">Introductory Course</td>
+                      <td className="border-2 text-center py-2 border-black">I</td>
+                      <td className="border-2 text-center border-black">Introductory Course</td>
                     </tr>
                     <tr>
-                      <td className="border-2 text-center py-2">E</td>
-                      <td className="border-2 text-center">Enabling Course</td>
+                      <td className="border-2 text-center py-2 border-black">E</td>
+                      <td className="border-2 text-center border-black">Enabling Course</td>
                     </tr>
                     <tr>
-                      <td className="border-2 text-center py-2">D</td>
-                      <td className="border-2 text-center">Demonstrative Course</td>
+                      <td className="border-2 text-center py-2 border-black">D</td>
+                      <td className="border-2 text-center border-black">Demonstrative Course</td>
                     </tr>
-                    <tr className="font-semibold">
-                      <td className="border-2 text-center py-1">Code</td>
-                      <td className="border-2 text-center">Definition</td>
-                    </tr>
-                    <tr>
-                      <td className="border-2 text-center py-5">I</td>
-                      <td className="border-2 text-center">An introductory course to an outcome</td>
+                    <tr className="font-semibold ">
+                      <td className="border-2 text-center py-1 border-black">Code</td>
+                      <td className="border-2 text-center border-black">Definition</td>
                     </tr>
                     <tr>
-                      <td className="border-2 text-center py-5">E</td>
-                      <td className="border-2 text-center">A course strengthens an outcome</td>
+                      <td className="border-2 text-center py-5 border-black">I</td>
+                      <td className="border-2 text-center border-black">An introductory course to an outcome</td>
                     </tr>
                     <tr>
-                      <td className="border-2 text-center py-5">D</td>
-                      <td className="border-2 text-center">A Course demonstrating an outcome</td>
+                      <td className="border-2 text-center py-5 border-black">E</td>
+                      <td className="border-2 text-center border-black">A course strengthens an outcome</td>
+                    </tr>
+                    <tr>
+                      <td className="border-2 text-center py-5 border-black">D</td>
+                      <td className="border-2 text-center border-black">A Course demonstrating an outcome</td>
                     </tr>
                   </tbody>
                 </table>
               </td>
-              <td colSpan={2} className="w-[10/12] align-top">
+              <td colSpan={2} className="w-[10/12] align-top border-black">
                 <table className="my-4 mx-2">
                   <tbody>
                     <tr>
-                      <td className="border-2 border-solid font-medium text-left px-4 w-1/2 relative">
+                      <td className="border-2 border-solid border-black font-medium text-left px-4 w-1/2 relative">
                         Semester/Year: {syll.course_semester} SY{syll.bg_school_year}<br />
                         Class Schedule: {syll.syll_class_schedule}<br />
                         Bldg./Rm. No. {syll.syll_bldg_rm}
                         {renderRemarkBubble("srf5")}
                       </td>
-                      <td className="border-2 border-solid font-medium text-start text-top px-4 relative">
+                      <td className="border-2 border-solid font-medium text-start text-top px-4 relative border-black">
                         Pre-requisite(s): {syll.course_pre_req} <br />
                         Co-requisite(s): {syll.course_co_req}
                         {renderRemarkBubble("srf4")}
                       </td>
                     </tr>
                     <tr>
-                      <td className="items-start border-2 border-solid font-medium text-left px-4 relative">
+                      <td className="items-start border-2 border-solid font-medium text-left px-4 relative border-black">
                         Instructor:{" "}
                         {syll.instructors.map((inst, idx) => (
                           <span className="font-bold" key={idx}>
@@ -468,14 +480,14 @@ const SyllView: React.FC = () => {
                         <br />
                         {renderRemarkBubble("srf6")}
                       </td>
-                      <td className="border-2 border-solid font-medium text-left px-4 relative">
+                      <td className="border-2 border-solid font-medium text-left px-4 relative border-black">
                         Consultation Schedule: {syll.syll_ins_consultation}<br />
                         Bldg rm no: {syll.syll_ins_bldg_rm}
                         {renderRemarkBubble("srf7")}
                       </td>
                     </tr>
                     <tr>
-                      <td colSpan={2} className="items-start border-2 border-solid font-medium text-left px-4 relative">
+                      <td colSpan={2} className="items-start border-2 border-solid font-medium text-left px-4 relative border-black">
                         <span className="text-left font-bold">I. Course Description:</span>
                         <br />
                         {syll.syll_course_description}
@@ -484,27 +496,27 @@ const SyllView: React.FC = () => {
                     </tr>
                     {/* Course Outcomes Table */}
                     <tr>
-                      <td colSpan={2} className="border-2 border-solid font-medium px-4 relative">
+                      <td colSpan={2} className="border-2 border-solid font-medium px-4 relative border-black">
                         <span className="text-left font-bold">II. Course Outcome:</span>
                         <br />
                         <table className="m-10 mx-auto border-2 border-solid w-11/12">
                           <thead>
-                            <tr className="border-2 border-solid">
+                            <tr className="border-2 border-solid border-black">
                               <th>Course Outcomes (CO)</th>
                               {programOutcomes.map((po, idx) => (
-                                <th className="border-2 border-solid" key={po.po_id}>{idx + 1}</th>
+                                <th className="border-2 border-solid border-black" key={po.po_id}>{idx + 1}</th>
                               ))}
                             </tr>
                           </thead>
                           <tbody>
                             {courseOutcomes.map((co) => (
-                              <tr key={co.syll_co_id} className="border-2 border-solid hover:bg-blue-100">
+                              <tr key={co.syll_co_id} className="border-2 border-solid hover:bg-blue-100 border-black">
                                 <td className="w-64 text-left font-medium px-2">
                                   <span className="font-bold">{co.syll_co_code} : </span>
                                   {co.syll_co_description}
                                 </td>
                                 {programOutcomes.map((po) => (
-                                  <td className="border-2 border-solid font-medium text-center py-1" key={po.po_id}>
+                                  <td className="border-2 border-solid font-medium text-center py-1 border-black" key={po.po_id}>
                                     {copos
                                       .filter(
                                         (copo) =>
@@ -524,28 +536,28 @@ const SyllView: React.FC = () => {
                     </tr>
                     {/* Course Outline Table */}
                     <tr>
-                      <td colSpan={2} className="border-2 border-solid font-medium px-4">
+                      <td colSpan={2} className="border-2 border-solid font-medium px-4 border-black">
                         <span className="text-left font-bold">III. Course Outline:</span>
                         <br />
-                        <table className="m-5 mx-auto border-2 border-solid w-full">
+                        <table className="m-5 mx-auto border-2 border-solid w-full border-black">
                           <thead>
-                            <tr className="border-2 border-solid">
-                              <th className="border-2 border-solid">Allotted Time</th>
-                              <th className="border-2 border-solid">Course Outcomes (C)</th>
-                              <th className="border-2 border-solid">Intended Learning Outcome (ILO)</th>
-                              <th className="border-2 border-solid">Topics</th>
-                              <th className="border-2 border-solid">Suggested Readings</th>
-                              <th className="border-2 border-solid">Teaching Learning Activities</th>
-                              <th className="border-2 border-solid">Assessment Tasks/Tools</th>
-                              <th className="border-2 border-solid">Grading Criteria</th>
-                              <th className="border-2 border-solid">Remarks</th>
+                            <tr className="border-2 border-solid border-black">
+                              <th className="border-2 border-solid border-black">Allotted Time</th>
+                              <th className="border-2 border-solid border-black">Course Outcomes (C)</th>
+                              <th className="border-2 border-solid border-black">Intended Learning Outcome (ILO)</th>
+                              <th className="border-2 border-solid border-black">Topics</th>
+                              <th className="border-2 border-solid border-black">Suggested Readings</th>
+                              <th className="border-2 border-solid border-black">Teaching Learning Activities</th>
+                              <th className="border-2 border-solid border-black">Assessment Tasks/Tools</th>
+                              <th className="border-2 border-solid border-black">Grading Criteria</th>
+                              <th className="border-2 border-solid border-black">Remarks</th>
                             </tr>
                           </thead>
                           <tbody>
                             {courseOutlines.map((cot, idx) => (
                               <tr key={cot.syll_co_out_id} className="border-2 border-solid hover:bg-blue-100">
-                                <td className="border-2 border-solid p-2">{cot.syll_allotted_time}</td>
-                                <td className="border-2 border-solid p-2">
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_allotted_time}</td>
+                                <td className="border-2 border-solid p-2 border-black">
                                   {cot.cos.map((co, i) => (
                                     <span key={i}>
                                       {co.syll_co_code}
@@ -553,24 +565,24 @@ const SyllView: React.FC = () => {
                                     </span>
                                   ))}
                                 </td>
-                                <td className="border-2 border-solid p-2">{cot.syll_intended_learning}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_topics}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_suggested_readings}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_learning_act}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_asses_tools}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_grading_criteria}</td>
-                                <td className="border-2 border-solid p-2">{cot.syll_remarks}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_intended_learning}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_topics}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_suggested_readings}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_learning_act}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_asses_tools}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_grading_criteria}</td>
+                                <td className="border-2 border-solid p-2 border-black">{cot.syll_remarks}</td>
                               </tr>
                             ))}
                             <tr className="border-2 border-solid p-2">
-                              <th colSpan={10} className="border-2 border-solid font-medium px-4">
+                              <th colSpan={10} className="border-2 border-solid font-medium px-4 border-black">
                                 MIDTERM EXAMINATION
                               </th>
                             </tr>
                             {courseOutlinesFinals.map((cotf, idx) => (
                               <tr key={cotf.syll_co_out_id} className="border-2 border-solid hover:bg-blue-100">
-                                <td className="border-2 border-solid">{cotf.syll_allotted_time}</td>
-                                <td className="border-2 border-solid">
+                                <td className="border-2 border-solid border-black">{cotf.syll_allotted_time}</td>
+                                <td className="border-2 border-solid border-black">
                                   {cotf.cos.map((co, i) => (
                                     <span key={i}>
                                       {co.syll_co_code}
@@ -578,17 +590,17 @@ const SyllView: React.FC = () => {
                                     </span>
                                   ))}
                                 </td>
-                                <td className="border-2 border-solid">{cotf.syll_intended_learning}</td>
-                                <td className="border-2 border-solid">{cotf.syll_topics}</td>
-                                <td className="border-2 border-solid">{cotf.syll_suggested_readings}</td>
-                                <td className="border-2 border-solid">{cotf.syll_learning_act}</td>
-                                <td className="border-2 border-solid">{cotf.syll_asses_tools}</td>
-                                <td className="border-2 border-solid">{cotf.syll_grading_criteria}</td>
-                                <td className="border-2 border-solid">{cotf.syll_remarks}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_intended_learning}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_topics}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_suggested_readings}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_learning_act}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_asses_tools}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_grading_criteria}</td>
+                                <td className="border-2 border-solid border-black">{cotf.syll_remarks}</td>
                               </tr>
                             ))}
                             <tr>
-                              <th colSpan={10} className="border-2 border-solid font-medium px-4">
+                              <th colSpan={10} className="border-2 border-solid font-medium px-4 border-black">
                                 FINAL EXAMINATION
                               </th>
                             </tr>
@@ -598,7 +610,7 @@ const SyllView: React.FC = () => {
                     </tr>
                     {/* Course Requirements */}
                     <tr className="crq border-2">
-                      <td colSpan={2} className="border-2 border-solid font-medium relative">
+                      <td colSpan={2} className="border-2 border-solid font-medium relative border-black">
                         <span className="text-left font-bold">IV. Course Requirements:</span>
                         <br />
                         <div className="crq" dangerouslySetInnerHTML={{ __html: syll.syll_course_requirements }} />
@@ -608,7 +620,7 @@ const SyllView: React.FC = () => {
                   </tbody>
                 </table>
                 {/* Signatories */}
-                <div className="grid grid-cols-3 m-3">
+                <div className="grid grid-cols-3 m-3 ">
                   <div>
                     <div className="flex justify-center">Prepared By:</div>
                     {bLeaders.map((instructor, idx) => (

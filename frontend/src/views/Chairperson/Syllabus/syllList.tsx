@@ -1,97 +1,125 @@
-import React from "react";
-import { Table, Button } from "flowbite-react";
+import React, { useState } from "react";
+import ChairSidebar from "../../layouts/chairSidebar";
+import ChairpersonNav from "../../layouts/chairpersonNav";
+import ChairSyllabusTable from "../../components/chair-syllabus-table";
 
-// Mocked syllabus list data (replace with API when backend is ready)
-const syllabusList = [
+// === Sample dummy data ===
+const dummySyllabi = [
   {
-    id: 1,
-    course_title: "Software Engineering",
-    course_code: "SE101",
-    instructor: "Juan Dela Cruz",
-    semester: "1st",
-    school_year: "2024-2025",
-    status: "Pending",
+    syll_id: 1,
+    course_title: "Intro to CS",
+    course_code: "CS101",
+    bg_school_year: "2023-2024",
+    course_semester: "1st Semester",
+    chair_submitted_at: "2024-08-01",
+    dean_approved_at: "2024-08-05",
+    version: 1,
+    status: "Draft",
   },
   {
-    id: 2,
-    course_title: "Database Systems",
-    course_code: "DB102",
-    instructor: "Maria Santos",
-    semester: "2nd",
-    school_year: "2024-2025",
-    status: "Approved",
+    syll_id: 2,
+    course_title: "Data Structures",
+    course_code: "CS102",
+    bg_school_year: "2023-2024",
+    course_semester: "1st Semester",
+    chair_submitted_at: "2024-08-02",
+    dean_approved_at: "2024-08-06",
+    version: 1,
+    status: "Pending Chair Review",
   },
-  // Add more mock data as needed
 ];
 
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+interface Notification {
+  id: string;
+  data: {
+    for: string;
+    course_code: string;
+    bg_school_year: string;
+    message: string;
+    action_url: string;
+  };
+  created_at: Date;
+}
+
+const mockUser: User = {
+  firstname: "John",
+  lastname: "Doe",
+  email: "john.doe@example.com",
+};
+
+const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    data: {
+      for: "CS",
+      course_code: "CS101",
+      bg_school_year: "2024-2025",
+      message: "New syllabus submitted for review",
+      action_url: "/syllabus/1",
+    },
+    created_at: new Date("2024-01-15T10:30:00"),
+  },
+];
+
+const dummyDepartments = ["CS", "IT", "EE"];
+// === End dummy data ===
+
 const SyllList: React.FC = () => {
+  const [user] = useState<User>(mockUser);
+  const [notifications] = useState<Notification[]>(mockNotifications);
+  const [activeRoute, setActiveRoute] = useState("home");
+
+  const handleRouteChange = (route: string) => {
+    setActiveRoute(route);
+    console.log(`Navigating to: ${route}`);
+  };
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+  };
+
   return (
-    <div
-      className="min-h-screen pt-14"
-      style={{
-        backgroundImage: "url('/assets/Wave1.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top",
-        backgroundAttachment: "fixed",
-        backgroundSize: "contain",
-      }}
-    >
-      <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg mt-14 max-w-6xl mx-auto">
-        <h1 className="font-bold text-4xl text-[#201B50] mb-8">List of Syllabus</h1>
-        <div className="overflow-x-auto">
-          <Table hoverable={true} className="min-w-full">
-            <thead>
-              <tr>
-                <th>Course Title</th>
-                <th>Course Code</th>
-                <th>Instructor</th>
-                <th>Semester</th>
-                <th>School Year</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {syllabusList.map((syllabus) => (
-                <tr key={syllabus.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <td className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {syllabus.course_title}
-                  </td>
-                  <td>{syllabus.course_code}</td>
-                  <td>{syllabus.instructor}</td>
-                  <td>{syllabus.semester}</td>
-                  <td>{syllabus.school_year}</td>
-                  <td>
-                    <span
-                      className={
-                        syllabus.status === "Approved"
-                          ? "text-green-600 font-semibold"
-                          : syllabus.status === "Pending"
-                          ? "text-yellow-600 font-semibold"
-                          : "text-red-600 font-semibold"
-                      }
-                    >
-                      {syllabus.status}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="flex gap-2">
-                      <Button color="info" size="xs">
-                        View
-                      </Button>
-                      <Button color="warning" size="xs">
-                        Edit
-                      </Button>
-                      <Button color="failure" size="xs">
-                        Delete
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+    <div className="min-h-screen flex">
+      <style>{`
+        body {
+          background-image: url('/assets/Wave.png');
+          background-repeat: no-repeat;
+          background-position: top;
+          background-attachment: fixed;
+          background-size: cover;
+          background-color: transparent;
+        }
+      `}</style>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        <ChairpersonNav
+        user={user}
+        notifications={notifications}
+        activeRoute={activeRoute}
+        handleRouteChange={handleRouteChange}
+        handleLogout={handleLogout}
+      />
+
+      <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
+
+        <main className="absolute p-4 mt-14 flex min-h-screen w-full" style={{
+          top: "150px",   // Y-coordinate
+          left: "280px",  // X-coordinate
+        }}>
+          <div className="absolute top-20 left-64 p-6 pl-3 pr-3 shadow bg-white border-dashed rounded-lg dark:border-gray-700 w-[1080px] h-2/3">
+            <h1 className="font-bold text-4xl text-[#201B50] mb-8 text-left">
+            List of Syllabus
+            </h1>
+            <ChairSyllabusTable syllabi={dummySyllabi} departments={dummyDepartments} />
         </div>
+        </main>
       </div>
     </div>
   );

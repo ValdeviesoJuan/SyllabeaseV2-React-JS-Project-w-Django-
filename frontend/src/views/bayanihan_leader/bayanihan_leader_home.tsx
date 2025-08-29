@@ -181,9 +181,58 @@ export default function Dashboard({
           <div className="text-blue-600 text-2xl font-semibold mb-4">Syllabi</div>
 
           <div className="flex gap-6 py-4">
-            <Button color="light">+ Create Syllabus</Button>
-            <Button color="light">+ Select Template</Button>
+            <Button className="bg-[#d7ecf9] hover:bg-[#c3dff3] text-gray-800 flex items-center gap-2">
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 8v8M8 12h8"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="black"
+                  strokeWidth="1.5"
+                />
+              </svg>
+              Create Syllabus
+            </Button>
+
+            <Button className="bg-[#d7ecf9] hover:bg-[#c3dff3] text-gray-800 flex items-center gap-2">
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 8v8M8 12h8"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="black"
+                  strokeWidth="1.5"
+                />
+              </svg>
+              Select Template
+            </Button>
           </div>
+
+
 
           {/* Table */}
           <div className="mt-4 border rounded-lg p-4 bg-white overflow-x-auto">

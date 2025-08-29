@@ -4,6 +4,7 @@ import BayanihanLeaderHome from "./views/bayanihan_leader/bayanihan_leader_home"
 import BlSyllabus from "./views/bayanihan_leader/bl_syllabus";
 import BLTOSPage from "./views/bayanihan_leader/bl_tos";
 import BLMemoPage from "./views/bayanihan_leader/bl_memo";
+import RolePage from "./views/auth/role";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/bayanihan-leader/syllabus" element={<BlSyllabus />} /> {/* ✅ syllabus route */}
         <Route path="/tos" element={<BLTOSPage />} />
         <Route path="/memo" element={<BLMemoPage />} />
+        <Route path="/role" element={<RolePage />} />
       </Routes>
     </Router>
   );

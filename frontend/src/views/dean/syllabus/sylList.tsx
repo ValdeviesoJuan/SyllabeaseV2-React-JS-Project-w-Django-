@@ -2,7 +2,7 @@
 import React from "react";
 import DeanSidebar from "../../layouts/deanSidebar";
 import DeanHeader from "../../layouts/deanHeader";
-import DeanSyllabusTable from "../../livewire/dean-syllabus-table"; // the wrapper table component
+import DeanSyllabusTable from "../../livewire/dean-syllabus-table"; 
 
 // === Sample dummy data ===
 const dummySyllabi = [

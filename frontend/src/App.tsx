@@ -14,6 +14,12 @@ import EditDepartment from "./views/dean/department/deparmentEdit";
 import DepartmentHome from "./views/dean/department/deparmentHome";
 import SylList from "./views/dean/syllabus/sylList";
 import SylView from "./views/dean/syllabus/sylView";
+import Memos from "./views/dean/memo/memos";
+import EditMemo from "./views/dean/memo/edit";
+import MemoShow from "./views/dean/memo/show";
+
+
+
 
 
 
@@ -39,11 +45,18 @@ function App() {
         <Route path="/dean/department/edit" element={<EditDepartment />} />
         <Route path="/dean/department/home" element={<DepartmentHome />} />
         <Route path="/dean/syllabus/list" element={<SylList />} />
-       
         <Route path="/dean/syllabus/view" element={<SylView />} />
-        
+        <Route path="/dean/memos" element={<Memos />} /> 
+        <Route path="/dean/memos/edit/:id" element={<EditMemo />} />
+        <Route path="/dean/memos/:id" element={<MemoShow />} />
+
+/>
 
 
+
+
+
+    
       </Routes>
     </Router>
   );

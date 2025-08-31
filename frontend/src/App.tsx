@@ -17,6 +17,7 @@ import SylView from "./views/dean/syllabus/sylView";
 import Memos from "./views/dean/memo/memos";
 import EditMemo from "./views/dean/memo/edit";
 import MemoShow from "./views/dean/memo/show";
+import Register from "./views/auth/register";
 
 
 
@@ -49,9 +50,7 @@ function App() {
         <Route path="/dean/memos" element={<Memos />} /> 
         <Route path="/dean/memos/edit/:id" element={<EditMemo />} />
         <Route path="/dean/memos/:id" element={<MemoShow />} />
-
-/>
-
+        <Route path="/register" element={<Register />} />
 
 
 

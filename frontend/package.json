@@ -12,7 +12,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
-    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "dayjs": "^1.11.13",
     "flowbite": "^3.1.2",
@@ -53,6 +52,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^6.0.0",
+    "@types/react": "^19.1.12",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",

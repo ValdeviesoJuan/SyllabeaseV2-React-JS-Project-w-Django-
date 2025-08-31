@@ -82,7 +82,7 @@ const RegisterPage: React.FC = () => {
                 Please fill out all the fields.
               </p>
             </div>
-
+             <h1 className="text-xl font-bold text-black mb-6">Create Account</h1>
             {/* Form */}
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid gap-4 gap-y-3 text-sm grid-cols-1 md:grid-cols-2">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ChairSidebar from "../../layouts/chairSidebar";
+import ChairpersonNav from "../../layouts/chairpersonNav";
 import Modal from "../../components/Modal";
 
 // Mocked data (replace with backend API when available)
@@ -71,6 +72,44 @@ const chair = {
   signature: "chair_signature.png",
 };
 
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+interface Notification {
+  id: string;
+  data: {
+    for: string;
+    course_code: string;
+    bg_school_year: string;
+    message: string;
+    action_url: string;
+  };
+  created_at: Date;
+}
+
+const mockUser: User = {
+  firstname: "John",
+  lastname: "Doe",
+  email: "john.doe@example.com",
+};
+
+const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    data: {
+      for: "CS",
+      course_code: "CS101",
+      bg_school_year: "2024-2025",
+      message: "New syllabus submitted for review",
+      action_url: "/syllabus/1",
+    },
+    created_at: new Date("2024-01-15T10:30:00"),
+  },
+];
+
 // Calculate totals
 const total_tos_r_col_1 = tos_rows.reduce((sum, row) => sum + (row.tos_r_col_1 || 0), 0);
 const total_tos_r_col_2 = tos_rows.reduce((sum, row) => sum + (row.tos_r_col_2 || 0), 0);
@@ -84,16 +123,31 @@ const formatDate = (dateStr: string) => {
 
 const TosView: React.FC = () => {
   // Modal state (for future use)
+  const [user] = useState<User>(mockUser);
+  const [notifications] = useState<Notification[]>(mockNotifications);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [activeRoute, setActiveRoute] = useState<string>("curricula");
-    const handleRouteChange = (route: string) => {
-      setActiveRoute(route);
-      console.log(`Navigating to: ${route}`);
-    };
+
+  const handleRouteChange = (route: string) => {
+    setActiveRoute(route);
+    console.log(`Navigating to: ${route}`);
+  };
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+  };
 
   return (
     <div>
-        <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
+      <ChairpersonNav
+        user={user}
+        notifications={notifications}
+        activeRoute={activeRoute}
+        handleRouteChange={handleRouteChange}
+        handleLogout={handleLogout}
+      />
+      <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
+
       <Modal
         show={isModalOpen}
         title="TOS Modal"
@@ -103,15 +157,24 @@ const TosView: React.FC = () => {
         {/* Modal content here */}
       </Modal>
       <div
-        className="min-h-screen pt-14"
+        className="absolute min-h-screen pt-14"
         style={{
-          backgroundImage: "url('/assets/wave.png')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "top",
-          backgroundAttachment: "fixed",
-          backgroundSize: "contain",
+          top: "60px",
+          left: "350px",
+          right: "50px",
+          bottom: "200px",
         }}
       >
+        <style>{`
+          body {
+            background-image: url('/assets/Wave.png');
+            background-repeat: no-repeat;
+            background-position: top;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: transparent;
+          }
+        `}</style>
         {/* Notices */}
         {tos.chair_returned_at ? (
           <div className="flex flex-col items-center justify-center border-2 border-yellow-400 bg-opacity-75 w-[500px] lg:w-[800px] rounded-lg bg-white py-6 mt-6 mx-auto">
@@ -199,7 +262,7 @@ const TosView: React.FC = () => {
                   {/* RIGHT: Document Info Table */}
                   <table className="text-xs text-center border border-gray-400 ml-20">
                     <thead>
-                      <tr className="bg-[#5A6E99] text-white">
+                      <tr className="bg-black-100 text-black">
                         <th colSpan={3} className="border border-gray-400 px-3 py-1 text-xs font-semibold">
                           Document Code No.
                         </th>
@@ -211,7 +274,7 @@ const TosView: React.FC = () => {
                           FM-USTP-ACAD-12
                         </td>
                       </tr>
-                      <tr className="bg-[#5A6E99] text-white">
+                      <tr className="bg-[#5A6E99] text-black">
                         <td className="border border-gray-400 px-2 py-1 font-medium">Rev. No.</td>
                         <td className="border border-gray-400 px-2 py-1 font-medium">Effective Date</td>
                         <td className="border border-gray-400 px-2 py-1 font-medium">Page No.</td>

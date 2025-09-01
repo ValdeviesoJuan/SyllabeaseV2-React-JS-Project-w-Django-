@@ -265,7 +265,7 @@ const SyllView: React.FC = () => {
         <div className="flex items-center justify-between w-full mb-4 ">
         {/* Back Button at the Left */}
         <button
-          onClick={() => navigate("/chairperson/home")}
+          onClick={() => navigate("/chairperson/syllabus")}
           className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black rounded ml-2"
         >
           Back

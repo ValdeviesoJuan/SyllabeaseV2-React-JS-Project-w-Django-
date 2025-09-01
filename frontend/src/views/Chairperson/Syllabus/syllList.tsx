@@ -110,15 +110,15 @@ const SyllList: React.FC = () => {
       <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
 
         <main className="absolute p-4 mt-14 flex min-h-screen w-full" style={{
-          top: "150px",   // Y-coordinate
-          left: "280px",  // X-coordinate
-        }}>
+            top: "150px",   // Y-coordinate
+            left: "280px",  // X-coordinate
+          }}>
           <div className="absolute top-20 left-64 p-6 pl-3 pr-3 shadow bg-white border-dashed rounded-lg dark:border-gray-700 w-[1080px] h-2/3">
-            <h1 className="font-bold text-4xl text-[#201B50] mb-8 text-left">
-            List of Syllabus
+            <h1 className="font-bold text-[#201B50]" style={{ fontSize: "2rem" }}>
+              List of Syllabus
             </h1>
             <ChairSyllabusTable syllabi={dummySyllabi} departments={dummyDepartments} />
-        </div>
+          </div>
         </main>
       </div>
     </div>

@@ -10,6 +10,9 @@ import SyllView from "./views/Chairperson/Syllabus/syllView";
 import Memo from "./views/Chairperson/memo/chairMemo";
 import Reports from "./views/Chairperson/Reports/reports";
 import TOS from "./views/Chairperson/Tos/tosList";
+import ShowChairMemo from "./views/Chairperson/memo/showChairMemo";
+import TosView from "./views/Chairperson/Tos/tosView";
+import CurrEdit from "./views/Chairperson/curricula/currEdit";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/chairperson/syllabus/:id" element={<SyllView />} />
         <Route path="/chairperson/memo" element={<Memo />} />
         <Route path="/chairperson/reports" element={<Reports />} />
+        <Route path="/chairperson/memo/:id" element={<ShowChairMemo />} />
+        <Route path="/chairperson/tos/view/:tosId" element={<TosView />} />
+        <Route path="/chairperson/curricula/edit/:id" element={<CurrEdit />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,6 @@
 // src/views/Chairperson/Syllabus/SyllList.tsx
 import React, { FC, useMemo, useState, ChangeEvent, KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Types
 type Tos = {
@@ -72,6 +73,7 @@ const SyllList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const perPage = 10;
   const [toss] = useState<Tos[]>(MOCK_TOSS);
+  const navigate = useNavigate();
 
   const applyFilters = () => {
     setCurrentPage(1);
@@ -249,10 +251,10 @@ const SyllList: FC = () => {
                 </td>
                 <td className="px-6 py-4">
                 <button
-                    className="hover:text-yellow-500 hover:underline cursor-pointer"
-                    onClick={() => alert(`View TOS ${tos.tos_id} (no backend)`)}
+                  className="hover:text-yellow-500 hover:underline cursor-pointer"
+                  onClick={() => navigate(`/chairperson/tos/view/${tos.tos_id}`)}
                 >
-                    View
+                  View
                 </button>
                 </td>
             </tr>

@@ -98,7 +98,9 @@ const ChairpersonTosPage: FC = () => {
                 background-color: transparent;
                 }
             `}</style>
-          <h1 className="font-bold text-4xl text-[#201B50] mb-8">Table of Specification</h1>
+          <h1 className="absolute font-bold text-[#201B50]" style={{ top: "90px", left: "280px", fontSize: "2rem" }}>
+            Table of Specification
+          </h1>
 
           {/* The converted Livewire component lives at frontend/src/views/components/chair-tos.tsx */}
           <ChairTos />

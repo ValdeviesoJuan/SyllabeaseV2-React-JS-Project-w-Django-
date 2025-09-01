@@ -218,13 +218,15 @@ const SylList: React.FC<Props> = ({ syllabi, departments }) => {
                       {syllabus.status}
                     </div>
                   </td>
-                  <td>
-                    <button
-                        onClick={() => navigate(`/chairperson/syllabus/${syllabus.syll_id}`)}
-                        className="bg-blue5 w-[80%] hover:bg-blue3 py-1 rounded-lg text-lg text-white cursor-pointer font-semibold shadow-lg"
-                        >
-                        View
-                    </button>
+                  <td className="px-6 py-4 flex">
+                    <div className="p-4">
+                      <button
+                          onClick={() => navigate(`/chairperson/syllabus/${syllabus.syll_id}`)}
+                          className="hover:text-yellow hover:underline"
+                          >
+                          View
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

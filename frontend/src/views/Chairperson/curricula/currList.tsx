@@ -114,9 +114,7 @@ const CurriculaPage: React.FC = () => {
   };
 
   const handleEdit = (id: number) => {
-    // client-side stub: navigate to edit page (replace with real route when backend exists)
-    // e.g. navigate(`/chairperson/curricula/edit/${id}`);
-    alert(`Edit clicked for curriculum id ${id} (wire to backend route when ready)`);
+    navigate(`/chairperson/curricula/edit/${id}`);
   };
 
   const handleDelete = (id: number) => {
@@ -160,7 +158,9 @@ const CurriculaPage: React.FC = () => {
         `}</style>
       <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg dark:border-gray-700">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="font-bold text-4xl text-[#201B50] mb-4">Curricula</h1>
+          <h1 className="font-bold text-[#201B50]" style={{ fontSize: "2rem" }}>
+              Curricula
+            </h1>
           <button
             onClick={() => openCreate()}
             className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2 bg-[#d7ecf9] hover:bg-[#c3dff3]"
@@ -204,7 +204,7 @@ const CurriculaPage: React.FC = () => {
                     <td className="px-6 py-4 font-medium text-gray-900">{curr.curr_code}</td>
                     <td className="px-6 py-4">{curr.effectivity}</td>
                     <td className="px-6 py-4">{curr.department_code}</td>
-                    <td className="px-6 py-4 flex gap-3">
+                    <td className="px-6 py-4 flex gap-4">
                       <button
                         onClick={() => handleEdit(curr.curr_id)}
                         className="text-green-600 font-semibold hover:underline"
@@ -252,31 +252,48 @@ const CurriculaPage: React.FC = () => {
     </div>
 
     {/* Create Modal */}
-    <Modal show={showCreateModal} title="Create New Curriculum" onClose={closeCreate} onSubmit={handleCreateSave}>
-      <div className="grid grid-cols-1 gap-3">
-        <label className="text-sm font-medium">Curriculum Code</label>
-        <input
-          value={newCurr.curr_code}
-          onChange={(e) => setNewCurr((s) => ({ ...s, curr_code: e.target.value }))}
-          className="border p-2 rounded"
-          placeholder="e.g., BSCS-2018"
-        />
-        <label className="text-sm font-medium">Effectivity</label>
-        <input
-          value={newCurr.effectivity}
-          onChange={(e) => setNewCurr((s) => ({ ...s, effectivity: e.target.value }))}
-          className="border p-2 rounded"
-          placeholder="e.g., 2018-2023"
-        />
-        <label className="text-sm font-medium">Department Code</label>
-        <input
-          value={newCurr.department_code}
-          onChange={(e) => setNewCurr((s) => ({ ...s, department_code: e.target.value }))}
-          className="border p-2 rounded"
-          placeholder="e.g., CS"
-        />
-      </div>
-    </Modal>
+<Modal
+  show={showCreateModal}
+  title="Create New Curriculum"
+  onClose={closeCreate}
+  onSubmit={handleCreateSave}
+>
+  {/* ✅ Wrapper div for styling */}
+  <div className="w-[600px] bg-white text-black rounded-lg p-4">
+    <div className="grid grid-cols-1 gap-3">
+      <label className="text-sm font-medium">Curriculum Code</label>
+      <input
+        value={newCurr.curr_code}
+        onChange={(e) =>
+          setNewCurr((s) => ({ ...s, curr_code: e.target.value }))
+        }
+        className="border p-2 rounded w-full bg-white text-black"
+        placeholder="e.g., BSCS-2018"
+      />
+
+      <label className="text-sm font-medium">Effectivity</label>
+      <input
+        value={newCurr.effectivity}
+        onChange={(e) =>
+          setNewCurr((s) => ({ ...s, effectivity: e.target.value }))
+        }
+        className="border p-2 rounded w-full bg-white text-black"
+        placeholder="e.g., 2018-2023"
+      />
+
+      <label className="text-sm font-medium">Department Code</label>
+      <input
+        value={newCurr.department_code}
+        onChange={(e) =>
+          setNewCurr((s) => ({ ...s, department_code: e.target.value }))
+        }
+        className="border p-2 rounded w-full bg-white text-black"
+        placeholder="e.g., CS"
+      />
+    </div>
+  </div>
+</Modal>
+
   </div>
   );
 };

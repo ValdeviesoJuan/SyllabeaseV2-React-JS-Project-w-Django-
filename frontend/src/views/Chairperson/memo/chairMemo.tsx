@@ -4,6 +4,7 @@ import { HiOutlineSearch } from "react-icons/hi";
 import type { FC, SVGProps } from "react"
 import ChairSidebar from "../../layouts/chairSidebar";
 import ChairpersonNav from "../../layouts/chairpersonNav";
+import { useNavigate } from "react-router-dom";
 
 // Mock type for memo
 type Memo = {
@@ -89,6 +90,7 @@ const ChairMemo: React.FC = () => {
   const [view, setView] = useState<"table" | "tiles">("table");
   const [readMemos, setReadMemos] = useState<string[]>([]);
   const [activeRoute, setActiveRoute] = useState("home");
+  const navigate = useNavigate();
 
   const handleRouteChange = (route: string) => {
     setActiveRoute(route);
@@ -112,11 +114,16 @@ const ChairMemo: React.FC = () => {
 
   // Handle memo row/tile click
   const handleMemoClick = (id: number) => {
-    if (!readMemos.includes(String(id))) {
-      setReadMemos([...readMemos, String(id)]);
-    }
-    alert(`Navigate to memo ${id} (replace with actual route)`);
-  };
+  if (!readMemos.includes(String(id))) {
+    setReadMemos([...readMemos, String(id)]);
+  }
+
+  const selectedMemo = memos.find(m => String(m.id) === String(id)); // ✅ Ensure matching type
+  if (selectedMemo) {
+    navigate(`/chairperson/memo/${id}`, { state: selectedMemo }); // ✅ Pass full memo object
+  }
+};
+
 
   const filteredMemos = memos.filter(
     (memo) =>

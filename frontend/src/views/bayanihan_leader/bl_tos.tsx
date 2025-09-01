@@ -116,7 +116,7 @@ export default function BLTOSPage({ initialNotif = null }: Props) {
       {/* Background */}
       <div
         className="fixed inset-0 -z-10 min-h-screen bg-no-repeat bg-top bg-contain"
-        style={{ backgroundImage: "url('/assets/Wave.png')" }}
+        style={{ backgroundImage: "url(/assets/Wave.png)" }}
       />
 
       {/* Header + Sidebar */}

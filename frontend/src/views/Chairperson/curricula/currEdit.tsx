@@ -37,7 +37,7 @@ const EditCurriculum: React.FC<Props> = ({ departments, curriculum }) => {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-fixed"
-      style={{ backgroundImage: `url('/assets/Wave1.png')`, backgroundSize: "contain" }}
+      style={{ backgroundImage: `url(/assets/Wave1.png)`, backgroundSize: "contain" }}
     >
       <div className="max-w-md w-[500px] bg-gradient-to-r from-white to-blue-100 p-6 rounded-lg shadow-lg">
         <img

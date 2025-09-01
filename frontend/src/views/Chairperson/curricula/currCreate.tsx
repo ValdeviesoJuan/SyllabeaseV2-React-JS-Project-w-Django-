@@ -16,7 +16,7 @@ const CreateCurriculum: React.FC = () => {
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain"
       style={{
-        backgroundImage: `url('/assets/Wave1.png')`,
+        backgroundImage: `url(/assets/Wave1.png)`,
       }}
     >
       <div className="max-w-md w-[500px] p-6 rounded-lg shadow-lg bg-gradient-to-r from-white to-blue-100">

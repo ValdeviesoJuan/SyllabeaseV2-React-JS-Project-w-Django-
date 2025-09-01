@@ -95,7 +95,7 @@ export default function Dashboard({
   return (
     <div
       className="flex min-h-screen w-full bg-cover bg-no-repeat bg-center"
-      style={{ backgroundImage: "url('/assets/Wave.png')" }}
+      style={{ backgroundImage: "url(/assets/Wave.png)" }}
     >
       {/* Sidebar */}
       <BlSidebar />

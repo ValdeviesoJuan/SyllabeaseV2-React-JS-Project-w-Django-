@@ -6,7 +6,7 @@ export default function Reports() {
     <div
       className="p-4 pb-10 shadow bg-white border-dashed rounded-lg dark:border-gray-700 mt-14"
       style={{
-        backgroundImage: "url('/assets/Wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

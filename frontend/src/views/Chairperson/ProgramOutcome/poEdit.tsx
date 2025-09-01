@@ -38,7 +38,7 @@ export default function PoEdit({ initialOutcomes = [] }: PoEditProps) {
     <div
       className="mt-14 p-4 pb-10 m-auto w-11/12 bg-gradient-to-r from-[#FFF] to-[#dbeafe] shadow-lg rounded-lg"
       style={{
-        backgroundImage: "url('/assets/Wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

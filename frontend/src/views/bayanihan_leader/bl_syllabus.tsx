@@ -124,7 +124,7 @@ export default function SyllabusList({ initialSyll = null }: Props) {
     <div
       className="min-h-screen bg-[#EEEEEE]"
       style={{
-        backgroundImage: "url('/assets/Wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

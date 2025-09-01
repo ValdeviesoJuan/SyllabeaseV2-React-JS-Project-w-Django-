@@ -25,7 +25,7 @@ const Home: React.FC<Props> = ({ missingSignature = false }) => {
   return (
     <div
       className="min-h-screen bg-cover bg-no-repeat bg-top bg-fixed"
-      style={{ backgroundImage: "url('/assets/Wave.png')" }}
+      style={{ backgroundImage: "url(/assets/Wave.png)" }}
     >
       {/* Missing Signature Alert */}
       {missingSignature && (

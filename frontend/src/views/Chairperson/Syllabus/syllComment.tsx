@@ -71,7 +71,7 @@ const SyllComment: React.FC<Props> = ({
 }) => {
   return (
     <div 
-      style={{ backgroundImage: "url('/assets/Wave.png')" }} 
+      style={{ backgroundImage: "url(/assets/Wave.png)" }} 
       className="font-thin mt-14 bg-no-repeat bg-top bg-fixed bg-contain"
     >
       {/* Finish Button */}

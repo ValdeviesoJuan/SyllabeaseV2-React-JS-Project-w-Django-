@@ -15,7 +15,7 @@ const CourseList: React.FC = () => {
     <div
       className="min-h-screen"
       style={{
-        backgroundImage: "url('/assets/Wave1.png')",
+        backgroundImage: "url(/assets/Wave1.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import ChairSidebar from "../../layouts/chairSidebar";
 import ChairpersonNav from "../../layouts/chairpersonNav";
+import { useNavigate } from "react-router-dom";
 
 // Mock data
 interface ProgramOutcome {
@@ -62,6 +63,7 @@ const ProgramOutcomeList: React.FC = () => {
   const [user] = useState<User>(mockUser);
   const [notifications] = useState<Notification[]>(mockNotifications);
   const [activeRoute, setActiveRoute] = useState("home");
+  const navigate = useNavigate();
 
   const handleRouteChange = (route: string) => {
     setActiveRoute(route);
@@ -79,12 +81,13 @@ const ProgramOutcomeList: React.FC = () => {
   };
 
   const handleAdd = () => {
-    alert("Navigate to Add Program Outcome (mock)");
+    navigate("/chairperson/program-outcome/create");
   };
 
   const handleEdit = () => {
-    alert("Navigate to Edit Program Outcome (mock)");
+    navigate("/chairperson/program-outcome/edit");
   };
+
 
   return (
     <div>

@@ -252,48 +252,47 @@ const CurriculaPage: React.FC = () => {
     </div>
 
     {/* Create Modal */}
-<Modal
-  show={showCreateModal}
-  title="Create New Curriculum"
-  onClose={closeCreate}
-  onSubmit={handleCreateSave}
->
-  {/* ✅ Wrapper div for styling */}
-  <div className="w-[600px] bg-white text-black rounded-lg p-4">
-    <div className="grid grid-cols-1 gap-3">
-      <label className="text-sm font-medium">Curriculum Code</label>
-      <input
-        value={newCurr.curr_code}
-        onChange={(e) =>
-          setNewCurr((s) => ({ ...s, curr_code: e.target.value }))
-        }
-        className="border p-2 rounded w-full bg-white text-black"
-        placeholder="e.g., BSCS-2018"
-      />
+    <Modal
+      show={showCreateModal}
+      title="Create New Curriculum"
+      onClose={closeCreate}
+      onSubmit={handleCreateSave}
+    >
+      {/* ✅ Wrapper div for styling */}
+      <div className="w-[600px] bg-white text-black rounded-lg p-4">
+        <div className="grid grid-cols-1 gap-3">
+          <label className="text-sm font-medium">Curriculum Code</label>
+          <input
+            value={newCurr.curr_code}
+            onChange={(e) =>
+              setNewCurr((s) => ({ ...s, curr_code: e.target.value }))
+            }
+            className="border p-2 rounded w-full bg-white text-black"
+            placeholder="e.g., BSCS-2018"
+          />
 
-      <label className="text-sm font-medium">Effectivity</label>
-      <input
-        value={newCurr.effectivity}
-        onChange={(e) =>
-          setNewCurr((s) => ({ ...s, effectivity: e.target.value }))
-        }
-        className="border p-2 rounded w-full bg-white text-black"
-        placeholder="e.g., 2018-2023"
-      />
+          <label className="text-sm font-medium">Effectivity</label>
+          <input
+            value={newCurr.effectivity}
+            onChange={(e) =>
+              setNewCurr((s) => ({ ...s, effectivity: e.target.value }))
+            }
+            className="border p-2 rounded w-full bg-white text-black"
+            placeholder="e.g., 2018-2023"
+          />
 
-      <label className="text-sm font-medium">Department Code</label>
-      <input
-        value={newCurr.department_code}
-        onChange={(e) =>
-          setNewCurr((s) => ({ ...s, department_code: e.target.value }))
-        }
-        className="border p-2 rounded w-full bg-white text-black"
-        placeholder="e.g., CS"
-      />
-    </div>
-  </div>
-</Modal>
-
+          <label className="text-sm font-medium">Department Code</label>
+          <input
+            value={newCurr.department_code}
+            onChange={(e) =>
+              setNewCurr((s) => ({ ...s, department_code: e.target.value }))
+            }
+            className="border p-2 rounded w-full bg-white text-black"
+            placeholder="e.g., CS"
+          />
+        </div>
+      </div>
+    </Modal>
   </div>
   );
 };

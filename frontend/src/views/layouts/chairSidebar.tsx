@@ -34,6 +34,7 @@ const ChairSidebar: React.FC<ChairSidebarProps> = ({ activeRoute, handleRouteCha
     },
     { key: "curricula", label: "Curricula", icon: () => <RectangleStackIcon className="w-6 h-6 mr-3" />, route: "/chairperson/curricula" },
     { key: "syllabus", label: "Syllabus", icon: () => <ClipboardDocumentListIcon className="w-6 h-6 mr-3" />, route: "/chairperson/syllabus" },
+    { key: "tos", label: "TOS", icon: () => <ClipboardDocumentListIcon className="w-6 h-6 mr-3" />, route: "/chairperson/tos" },
     { key: "memo", label: "Memo", icon: () => <DocumentTextIcon className="w-6 h-6 mr-3" />, route: "/chairperson/memo" },
     { key: "reports", label: "Reports", icon: () => <ChartBarIcon className="w-6 h-6 mr-3" />, route: "/chairperson/reports" },
   ];

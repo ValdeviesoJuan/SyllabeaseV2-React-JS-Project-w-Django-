@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import ChairSidbarSyllabus from "../../layouts/chairSidebarSyllabus";
 import { useNavigate } from "react-router-dom";
-import { HiArrowDownTray } from "react-icons/hi2";
-
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
 // Mocked data (replace with API/props when backend is ready)
 const syll = {
@@ -279,12 +278,12 @@ const SyllView: React.FC = () => {
             The syllabus has been approved for the upcoming semester.
             <div className="mt-2">
               <a
-              href="#"
-              className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition duration-200"
-            >
-              {HiArrowDownTray({ className: "w-5 h-5" }) as JSX.Element}
-              Export as DOCX
-            </a>
+                href="#"
+                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg transition duration-200"
+              >
+                <ArrowDownTrayIcon className="w-5 h-5" />
+                Export as DOCX
+              </a>
             </div>
 
           </div>

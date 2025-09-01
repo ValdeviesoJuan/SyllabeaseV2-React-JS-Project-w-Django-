@@ -9,6 +9,7 @@ import Syllabus from "./views/Chairperson/Syllabus/syllList";
 import SyllView from "./views/Chairperson/Syllabus/syllView";
 import Memo from "./views/Chairperson/memo/chairMemo";
 import Reports from "./views/Chairperson/Reports/reports";
+import TOS from "./views/Chairperson/Tos/tosList";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/chairperson/program-outcomes" element={<ProgramOutcome />} />
         <Route path="/chairperson/curricula" element={<Curricula />} />
         <Route path="/chairperson/syllabus" element={<Syllabus />} />
+        <Route path="/chairperson/tos" element={<TOS />} />
         <Route path="/chairperson/syllabus/:id" element={<SyllView />} />
         <Route path="/chairperson/memo" element={<Memo />} />
         <Route path="/chairperson/reports" element={<Reports />} />

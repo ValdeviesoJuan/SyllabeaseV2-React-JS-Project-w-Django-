@@ -19,7 +19,7 @@ const chair = {
   end_validity: "2025-08-31",
 };
 
-const ChairEdit: React.FC = () => {
+export default function ChairEdit() {
   const [form, setForm] = useState({
     user_id: chair.user_id,
     department_id: chair.entity_id,
@@ -46,25 +46,29 @@ const ChairEdit: React.FC = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar and Header */}
+      {/* Sidebar & header*/}
+      <DeanHeader children={undefined} />
       <DeanSidebar />
-      <div className="flex-1">
-        <DeanHeader children={undefined} />
 
-        {/* Page content */}
+      {/* Main Content */}
+      <div className="flex-1">
         <div
-          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain"
+          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain pl-52"
           style={{ backgroundImage: "url(/assets/Wave1.png)" }}
         >
           <div className="max-w-md bg-gradient-to-r from-[#FFF] to-[#dbeafe] w-[500px] p-6 rounded-lg shadow-lg">
             <img
-              className="edit_user_img text-center mt-4 mb-6 w-[280px] m-auto mb-2"
+              className="edit_user_img text-center mt-4 mb-6 w-[280px] m-auto"
               src="/assets/Edit Chairperson.png"
               alt="SyllabEase Logo"
             />
+
             <form onSubmit={handleSubmit}>
+              {/* Chairperson Dropdown */}
               <div className="mb-6">
-                <label htmlFor="user_id">Chairperson</label>
+                <div>
+                  <label htmlFor="user_id">Chairperson</label>
+                </div>
                 <select
                   name="user_id"
                   id="user_id"
@@ -81,8 +85,11 @@ const ChairEdit: React.FC = () => {
                 </select>
               </div>
 
+              {/* Department Dropdown */}
               <div className="mb-6">
-                <label htmlFor="department_id">Department</label>
+                <div>
+                  <label htmlFor="department_id">Department</label>
+                </div>
                 <select
                   name="department_id"
                   id="department_id"
@@ -102,8 +109,9 @@ const ChairEdit: React.FC = () => {
                 </select>
               </div>
 
-              <div className="grid gap-6 mb-3 md:grid-cols-2">
-                <div>
+              {/* Validity Dates */}
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="mb-3">
                   <label htmlFor="start_validity">Start of Validity</label>
                   <input
                     type="date"
@@ -115,7 +123,7 @@ const ChairEdit: React.FC = () => {
                     required
                   />
                 </div>
-                <div>
+                <div className="mb-3">
                   <label htmlFor="end_validity">End of Validity</label>
                   <input
                     type="date"
@@ -131,12 +139,41 @@ const ChairEdit: React.FC = () => {
                 </div>
               </div>
 
+              {/* Submit Button */}
               <div className="text-center">
                 <button
                   type="submit"
-                  className="btn btn-primary font-semibold text-white px-6 py-2 rounded-lg m-2 mb-4 bg-blue"
+                  className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2 m-auto mt-8 mb-4"
+                  style={{ background: "#d7ecf9" }}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.background = "#c3dff3")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.background = "#d7ecf9")
+                  }
                 >
-                  Update Chairman
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 8v8M8 12h8"
+                      stroke="black"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="black"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                  Update Chair
                 </button>
               </div>
             </form>
@@ -145,6 +182,4 @@ const ChairEdit: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default ChairEdit;
+}

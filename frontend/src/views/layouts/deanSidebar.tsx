@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import {
-  Home,
-  BookOpen,
-  CalendarDays,
-  BarChart3,
-  FileText,
-  Building2,
-  User,
-  Bell,
-  LogOut,
-} from "lucide-react";
+  HomeIcon,
+  BookOpenIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  DocumentIcon,
+  BuildingOffice2Icon,
+  UserCircleIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 
 export default function DeanSidebar() {
-  // dummy states
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  // dummy user + notifications
   const user = {
     firstname: "John",
     lastname: "Doe",
@@ -24,45 +21,118 @@ export default function DeanSidebar() {
   };
 
   const notifications = [
-    { id: 1, for: "C", course_code: "IT-101", school_year: "2024-2025", message: "New syllabus submitted" },
-    { id: 2, for: "M", course_code: "ENG-201", school_year: "2024-2025", message: "Deadline extended" },
+    {
+      id: 1,
+      for: "C",
+      course_code: "IT-101",
+      school_year: "2024-2025",
+      message: "New syllabus submitted",
+    },
+    {
+      id: 2,
+      for: "M",
+      course_code: "ENG-201",
+      school_year: "2024-2025",
+      message: "Deadline extended",
+    },
   ];
 
   return (
     <div className="flex">
-    
-      
-     {/* Sidebar */}
-      <aside className="w-[288px] bg-[#2468d2] text-white p-4 fixed  left-0 h-screen">
-        <div className="text-2xl font-bold mb-6 p-4">Syllabease</div>
+      {/* Sidebar */}
+      <aside className="w-[248px] bg-[#2468d2] text-white p-4 fixed left-0 h-screen shadow-lg">
+        <div className="text-2xl font-bold mb-6 p-4"></div>
+
         <nav className="space-y-2">
-          <a href="#" className="flex items-center gap- p-2 rounded bg-blue-700">
-            <Home size={18} /> Home
-          </a>
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <BookOpen size={18} /> Syllabus
-          </a>
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <CalendarDays size={18} /> Deadline
-          </a>
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <BarChart3 size={18} /> Reports
-          </a>
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <FileText size={18} /> Memo
+          {/* Chairperson pill button */}
+          <div className="flex justify-center mt-2 mb-4">
+            <button className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/30 bg-[#1e57b8] hover:bg-[#1c4fae] transition transform hover:scale-105">
+              <UserCircleIcon className="w-5 h-5 text-white" />
+              <span className="text-sm font-medium">Chairperson</span>
+              <ChevronDownIcon className="w-4 h-4 text-white" />
+            </button>
+          </div>
+
+          {/* Home */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <HomeIcon className="w-5 h-5 text-white" />
+            </div>
+            Home
           </a>
 
-          <div className="border-t border-gray-700 my-4"></div>
-
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <Building2 size={18} /> Department
+          {/* Syllabus */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <BookOpenIcon className="w-5 h-5 text-white" />
+            </div>
+            Syllabus
           </a>
-          <a href="#" className="flex items-center gap-2 p-2 rounded hover:bg-blue-700">
-            <User size={18} /> Chairperson
+
+          {/* Deadline */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <CalendarIcon className="w-5 h-5 text-white" />
+            </div>
+            Deadline
+          </a>
+
+          {/* Reports */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <ChartBarIcon className="w-5 h-5 text-white" />
+            </div>
+            Reports
+          </a>
+
+          {/* Memo */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <DocumentIcon className="w-5 h-5 text-white" />
+            </div>
+            Memo
+          </a>
+
+          <div className="border-t border-white/30 my-4"></div>
+
+          {/* Department */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <BuildingOffice2Icon className="w-5 h-5 text-white" />
+            </div>
+            Department
+          </a>
+
+          {/* Chairperson */}
+          <a
+            href="#"
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#1c4fae] transition transform hover:scale-105"
+          >
+            <div className="p-2 rounded-full bg-white/20 flex-shrink-0">
+              <UserCircleIcon className="w-5 h-5 text-white" />
+            </div>
+            Chairperson
           </a>
         </nav>
       </aside>
-        
-      </div>
+    </div>
   );
 }

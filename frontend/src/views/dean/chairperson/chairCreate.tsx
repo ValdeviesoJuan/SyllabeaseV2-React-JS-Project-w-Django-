@@ -13,12 +13,12 @@ export default function AssignChair() {
       {/* Main Content */}
       <div className="flex-1 "> 
         <div
-          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain"
+          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain pl-52"
           style={{ backgroundImage: "url(/assets/Wave1.png)" }}
         >
           <div className="max-w-md bg-gradient-to-r from-[#FFF] to-[#dbeafe] w-[500px] p-6 rounded-lg shadow-lg">
             <img
-              className="edit_user_img text-center mt-4 mb-6 w-[300px] m-auto mb-2"
+              className="edit_user_img text-center mt-4 mb-6 w-[300px] m-auto"
               src="/assets/Assign Chairperson.png"
               alt="SyllabEase Logo"
             />

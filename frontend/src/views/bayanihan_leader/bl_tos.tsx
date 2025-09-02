@@ -155,10 +155,39 @@ export default function BLTOSPage({ initialNotif = null }: Props) {
         <div className="m-auto pb-12 p-8 bg-white mt-[6%] shadow-lg rounded w-full max-w-7xl">
           <div className="flex justify-between items-center mb-6">
             <h1 className="font-bold text-4xl text-[#201B50]">
-                TOS list
+                Table of Specifications
               </h1>
             
           </div>
+
+          <Button
+              className="bg-[#d7ecf9] hover:bg-[#c3dff3] text-gray-800 flex items-center gap-2 mb-4"
+              onClick={() => alert("Open Create TOS modal (placeholder)")}
+            >
+              {/* Circle plus icon */}
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 8v8M8 12h8"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="black"
+                  strokeWidth="1.5"
+                />
+              </svg>
+              Create TOS
+            </Button>
 
           {/* Filters */}
           <div className="flex flex-nowrap items-center gap-2 mb-4 w-full">
@@ -194,37 +223,82 @@ export default function BLTOSPage({ initialNotif = null }: Props) {
             </div>
 
             {/* Filters */}
-            {/* ... (your select filters remain unchanged) ... */}
+            <select
+              value={filters.course_year_level}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, course_year_level: e.target.value }))
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue-500 rounded p-1 w-[12%] min-w-0"
+            >
+              <option value="">Year level (All)</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+              <option value="5th Year">5th Year</option>
+            </select>
+
+            <select
+              value={filters.course_semester}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, course_semester: e.target.value }))
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue-500 rounded p-1 w-[12%] min-w-0"
+            >
+              <option value="">Semester (All)</option>
+              <option value="1st Semester">1st Semester</option>
+              <option value="2nd Semester">2nd Semester</option>
+              <option value="Mid Year">Mid Year</option>
+            </select>
+
+            <select
+              value={filters.tos_term}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, tos_term: e.target.value }))
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue-500 rounded p-1 w-[13%] min-w-0"
+            >
+              <option value="">Term (All)</option>
+              <option value="Midterm">Midterm</option>
+              <option value="Finals">Finals</option>
+            </select>
+
+            <select
+              value={filters.bg_school_year}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, bg_school_year: e.target.value }))
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue-500 rounded p-1 w-[11%] min-w-0"
+            >
+              <option value="">SY (All)</option>
+              <option value="2023-2024">2023-2024</option>
+              <option value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+              <option value="2026-2027">2026-2027</option>
+              <option value="2027-2028">2027-2028</option>
+              <option value="2028-2029">2028-2029</option>
+              <option value="2029-2030">2029-2030</option>
+            </select>
+
+            <select
+              value={filters.tos_status}
+              onChange={(e) =>
+                setFilters((prev) => ({ ...prev, tos_status: e.target.value }))
+              }
+              className="border cursor-pointer focus:outline-none focus:border-blue-500 rounded p-1 w-[14%] min-w-0"
+            >
+              <option value="">Status (All)</option>
+              <option value="Draft">Draft</option>
+              <option value="Pending Review">Pending Review</option>
+              <option value="Returned by Chair">Returned by Chair</option>
+              <option value="Requires Revision">Requires Revision</option>
+              <option value="Revisions Applied">Revisions Applied</option>
+              <option value="Approved by Chair">Approved by Chair</option>
+            </select>
+
 
             <Button color="blue">Apply Filters</Button>
-            <Button
-              className="bg-[#d7ecf9] hover:bg-[#c3dff3] text-gray-800 flex items-center gap-2"
-              onClick={() => alert("Open Create TOS modal (placeholder)")}
-            >
-              {/* Circle plus icon */}
-              <svg
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 8v8M8 12h8"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="black"
-                  strokeWidth="1.5"
-                />
-              </svg>
-              Create TOS
-            </Button>
+            
           </div>
 
           {/* Table */}
@@ -275,14 +349,16 @@ export default function BLTOSPage({ initialNotif = null }: Props) {
                     <div className="flex gap-2">
                       <Button
                         size="xs"
-                        color="light"
+                        color="success"
+                        className="bg-green-600 text-white hover:bg-green-700"
                         onClick={() => alert(`View TOS ${tos.id}`)}
                       >
                         View
                       </Button>
                       <Button
                         size="xs"
-                        color="light"
+                        color="success"
+                        className="bg-red-600 text-white hover:bg-red-700"
                         onClick={() => alert(`Edit TOS ${tos.id}`)}
                       >
                         Edit

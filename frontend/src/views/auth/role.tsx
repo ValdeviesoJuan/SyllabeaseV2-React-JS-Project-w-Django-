@@ -1,20 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FaUserShield,
-  FaUserGraduate,
-  FaBriefcase,
-  FaPeopleGroup,
-  FaChalkboardUser,
-  FaUserCheck,
-  FaKey,
-} from "react-icons/fa6"; // ✅ react-icons (FontAwesome v6)
 
+// Role interface
 interface Role {
   role_id: number;
   role_name: string;
 }
 
+// Mock roles for now (replace later when backend is ready)
 const mockRoles: Role[] = [
   { role_id: 1, role_name: "Admin" },
   { role_id: 2, role_name: "Dean" },
@@ -28,14 +21,15 @@ export default function UserHome() {
   const navigate = useNavigate();
   const roles: Role[] = mockRoles;
 
+  // Redirect if only one role
   useEffect(() => {
     if (roles.length === 1) {
       const singleRole = roles[0];
-      const href = getRoleHref(singleRole.role_id);
-      navigate(href);
+      navigate(getRoleHref(singleRole.role_id));
     }
   }, [roles, navigate]);
 
+  // Role routes mapping
   const getRoleHref = (roleId: number): string => {
     switch (roleId) {
       case 1:
@@ -53,16 +47,6 @@ export default function UserHome() {
       default:
         return "#";
     }
-  };
-
-  // ✅ Map role_id to React Icons
-  const roleIcons: Record<number, React.ReactElement> = {
-    1: <FaUserShield />,
-    2: <FaUserGraduate />,
-    3: <FaBriefcase />,
-    4: <FaPeopleGroup />,
-    5: <FaChalkboardUser />,
-    6: <FaUserCheck />,
   };
 
   return (
@@ -97,11 +81,8 @@ export default function UserHome() {
             <button
               key={role.role_id}
               onClick={() => navigate(getRoleHref(role.role_id))}
-              className="flex items-center justify-start gap-3 bg-[#d7ecf9] rounded-xl px-4 py-3 text-[#1a3557] font-medium shadow-sm hover:bg-[#c3dff3] transition w-full"
+              className="flex items-center justify-center gap-3 bg-[#d7ecf9] rounded-xl px-4 py-3 text-[#1a3557] font-medium shadow-sm hover:bg-[#c3dff3] transition w-full"
             >
-              <span className="text-xl">
-                {roleIcons[role.role_id] ?? <FaKey />}
-              </span>
               {role.role_name}
             </button>
           ))}

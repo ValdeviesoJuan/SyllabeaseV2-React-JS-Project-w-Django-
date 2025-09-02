@@ -32,8 +32,12 @@ const CurriculaList: React.FC = () => {
           <Button
             className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out p-2 text-black font-semibold flex items-center gap-2"
             style={{ background: "#d7ecf9" }}
-            onMouseOver={(e) => ((e.target as HTMLButtonElement).style.background = "#c3dff3")}
-            onMouseOut={(e) => ((e.target as HTMLButtonElement).style.background = "#d7ecf9")}
+            onMouseOver={(e: React.MouseEvent<HTMLButtonElement>) =>
+              (e.currentTarget.style.background = "#c3dff3")
+            }
+            onMouseOut={(e: React.MouseEvent<HTMLButtonElement>) =>
+              (e.currentTarget.style.background = "#d7ecf9")
+            }
             onClick={() => console.log("Navigate to Create New Curriculum")}
           >
             <svg

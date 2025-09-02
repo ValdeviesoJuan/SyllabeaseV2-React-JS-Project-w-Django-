@@ -1,113 +1,75 @@
-// src/views/bayanihan_leader/BLMemoPage.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
+import Select from "react-select";
 import BLHeader from "../layouts/bl_header";
 import BLSidebar from "../layouts/bl_sidebar";
-import { Button, Badge } from "flowbite-react";
-import { FiSearch, FiGrid, FiList } from "react-icons/fi";
 
-type MemoItem = {
-  id: number | string;
+interface Memo {
+  id: number;
   title: string;
   description: string;
-  date: string; // ISO or readable
-  color?: "green" | "yellow" | "red" | string;
-  file_name?: string | string[]; // filenames or JSON string
-  url?: string; // where to navigate when clicking (placeholder)
-};
-
-const MOCK_MEMOS: MemoItem[] = [
-  {
-    id: 1,
-    title: "Memo: Schedule Change",
-    description:
-      "There will be a change in the class schedule for CS101 starting next week.",
-    date: "2025-08-20",
-    color: "green",
-    file_name: ["schedule.pdf", "notes.docx"],
-    url: "/memos/1",
-  },
-  {
-    id: 2,
-    title: "Memo: New Template",
-    description:
-      "Please use the updated syllabus template found attached. Make sure to update your outcomes.",
-    date: "2025-07-05",
-    color: "yellow",
-    file_name: "template.docx",
-    url: "/memos/2",
-  },
-  {
-    id: 3,
-    title: "Memo: System Downtime",
-    description:
-      "The system will undergo maintenance this weekend. Expect intermittent outages.",
-    date: "2025-06-12",
-    color: "red",
-    file_name: ["maintenance.pdf"],
-    url: "/memos/3",
-  },
-];
-
-function extToIcon(ext: string) {
-  const e = ext.toLowerCase();
-  if (["pdf"].includes(e)) return { label: "PDF", color: "text-red-600" };
-  if (["doc", "docx"].includes(e)) return { label: "DOC", color: "text-blue-600" };
-  if (["xls", "xlsx"].includes(e)) return { label: "XLS", color: "text-green-600" };
-  if (["jpg", "jpeg", "png"].includes(e)) return { label: "IMG", color: "text-amber-600" };
-  return { label: "FILE", color: "text-sky-600" };
+  date: string;
+  color: "green" | "yellow" | "red" | "gray";
+  from: string;
+  file_name: string[];
 }
 
-export default function BLMemoPage() {
+interface User {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+const MemoPage: React.FC = () => {
+  const [memos, setMemos] = useState<Memo[]>([
+    {
+      id: 1,
+      title: "Meeting Memo",
+      description: "Reminder: faculty meeting on Friday.",
+      date: "2025-08-30",
+      color: "yellow",
+      from: "admin@ustp.edu.ph",
+      file_name: ["agenda.pdf"],
+    },
+    {
+      id: 2,
+      title: "System Update",
+      description: "New grading system rollout next week.",
+      date: "2025-09-05",
+      color: "red",
+      from: "it@ustp.edu.ph",
+      file_name: ["manual.docx", "guide.pdf"],
+    },
+  ]);
+
+  const [users] = useState<User[]>([
+    { id: 1, firstname: "John", lastname: "Doe", email: "jdoe@ustp.edu.ph" },
+    { id: 2, firstname: "Jane", lastname: "Smith", email: "jsmith@ustp.edu.ph" },
+  ]);
+
   const [view, setView] = useState<"table" | "tiles">("table");
   const [search, setSearch] = useState("");
-  const [memos] = useState<MemoItem[]>(MOCK_MEMOS);
-  const [readSet, setReadSet] = useState<Set<string>>(new Set());
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editMemo, setEditMemo] = useState<Memo | null>(null);
+  const [readMemos, setReadMemos] = useState<number[]>([]);
 
-  // load read memos from localStorage
   useEffect(() => {
-    const stored = localStorage.getItem("leaderReadMemos");
-    if (stored) {
-      try {
-        const arr = JSON.parse(stored) as string[];
-        setReadSet(new Set(arr));
-      } catch {
-        setReadSet(new Set());
-      }
-    }
+    const stored = JSON.parse(localStorage.getItem("readDeanMemos") || "[]");
+    setReadMemos(stored);
   }, []);
 
-  // persist readSet when changes
-  useEffect(() => {
-    localStorage.setItem("leaderReadMemos", JSON.stringify(Array.from(readSet)));
-  }, [readSet]);
+  const markAsRead = (id: number) => {
+    if (!readMemos.includes(id)) {
+      const updated = [...readMemos, id];
+      setReadMemos(updated);
+      localStorage.setItem("readDeanMemos", JSON.stringify(updated));
+    }
+  };
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return memos;
-    return memos.filter(
-      (m) =>
-        m.title.toLowerCase().includes(q) ||
-        m.description.toLowerCase().includes(q)
-    );
-  }, [memos, search]);
-
-  function markAsRead(id: string | number) {
-    setReadSet((prev) => {
-      const next = new Set(prev);
-      next.add(String(id));
-      return next;
-    });
-  }
-
-  function handleRowClick(url?: string, id?: string | number) {
-    if (id !== undefined) markAsRead(id);
-    // placeholder navigation: if you later wire to react-router, replace
-    if (url) window.location.href = url;
-  }
-
-  // helper for border colors
-  function borderHex(c?: string) {
-    switch (c) {
+  const borderColor = (color: string) => {
+    switch (color) {
       case "green":
         return "#22c55e";
       case "yellow":
@@ -117,196 +79,209 @@ export default function BLMemoPage() {
       default:
         return "#d1d5db";
     }
-  }
+  };
+
+  const filteredMemos = memos.filter((m) =>
+    m.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="relative min-h-screen bg-[#EEEEEE]">
-      {/* Wave background (expects public/assets/Wave.png) */}
-      <div
-        className="fixed inset-0 -z-10 min-h-screen bg-no-repeat bg-top bg-contain"
-        style={{ backgroundImage: "url(/assets/Wave.png)" }}
-      />
+    <div className="flex">
+          {/* Sidebar and Header */}
+          <BLSidebar />
+          <BLHeader />
+          
+    
+          {/* Main content area */}
+          <div
+            className="flex-1 p-4 mt-14 ml-[288px]"
+            style={{
+                backgroundImage: 'url(/assets/Wave.png)',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'top',
+                backgroundAttachment: 'fixed',
+                backgroundSize: 'cover', 
+                backgroundColor: '#EEEEEE',
+                minHeight: '100vh',
+            }}
+            >
 
-      {/* Header & Sidebar */}
-      <BLSidebar />
-      <BLHeader />
 
-      {/* Page content wrapper - leave space for header & sidebar */}
-      <main className="pl-[288px] pt-[72px] p-6">
-        <div className="mt-0 p-4 shadow bg-white border-dashed rounded-lg">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-gray-800">Memorandum Issued by the Dean</h1>
+          <div className="max-w shadow rounded-lg bg-white p-6">
+            {/* Header */}
+            <div className="mb-6">
+              <h1 className="text-2xl font-semibold text-gray-800">
+                Memorandum
+              </h1>
+            </div>
 
-            <div className="flex gap-2 items-center">
-              <div className="relative">
+            {/* Search & Controls */}
+            <div className="mb-4 flex justify-between items-center">
+              <div className="relative w-64">
                 <input
+                  type="text"
+                  placeholder="Search.."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-64 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                  placeholder="Search..."
+                  className="pl-10 pr-4 py-2 w-full border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
-                <FiSearch className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+                <Icon
+                  icon="mdi:magnify"
+                  className="absolute left-3 top-2.5 w-5 h-5 text-gray-400"
+                />
               </div>
 
-              {/* View toggle */}
               <div className="flex gap-2">
                 <button
-                  type="button"
                   onClick={() => setView("table")}
                   className={`p-2 rounded-xl transition ${
-                    view === "table" ? "bg-[#d7ecf9]" : "bg-white hover:bg-[#f2f8ff]"
+                    view === "table" ? "bg-[#c3dff3]" : "bg-[#d7ecf9]"
                   }`}
                   title="Table View"
                 >
-                  <FiList className="w-5 h-5 text-black" />
+                  <Icon icon="mdi:table" width={22} height={22} />
                 </button>
-
                 <button
-                  type="button"
                   onClick={() => setView("tiles")}
                   className={`p-2 rounded-xl transition ${
-                    view === "tiles" ? "bg-[#d7ecf9]" : "bg-white hover:bg-[#f2f8ff]"
+                    view === "tiles" ? "bg-[#c3dff3]" : "bg-[#d7ecf9]"
                   }`}
                   title="Tile View"
                 >
-                  <FiGrid className="w-5 h-5 text-black" />
+                  <Icon icon="mdi:view-grid" width={22} height={22} />
                 </button>
+
+                
               </div>
             </div>
-          </div>
 
-          {/* Table View */}
-          {view === "table" && (
-            <div className="overflow-x-auto">
-              <table className="w-full table-fixed border-separate border-spacing-y-4">
-                <thead>
-                  <tr className="text-sm">
-                    <th className="px-2 py-2 w-[15%] rounded-l-lg text-left">Title</th>
-                    <th className="px-2 py-2 w-[60%] text-left">Description</th>
-                    <th className="px-2 py-2 w-[10%] rounded-r-lg text-left">Date</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm text-gray-700">
-                  {filtered.length === 0 ? (
-                    <tr>
-                      <td colSpan={3} className="text-center py-6 text-gray-500">
-                        No memos available at the moment.
-                      </td>
+            {/* Table View */}
+            {view === "table" && (
+              <div className="overflow-x-auto">
+                <table className="w-full table-fixed border-separate border-spacing-y-2">
+                  <thead>
+                    <tr className="bg-[#007BFF] text-white text-sm">
+                      <th className="px-2 py-2 w-[15%] rounded-l-lg">Title</th>
+                      <th className="px-2 py-2 w-[55%]">Description</th>
+                      <th className="px-2 py-2 w-[15%]">Date</th>
+                      <th className="px-2 py-2 w-[10%] rounded-r-lg">Action</th>
                     </tr>
-                  ) : (
-                    filtered.map((memo) => {
-                      const isRead = readSet.has(String(memo.id));
-                      return (
+                  </thead>
+                  <tbody className="text-sm text-gray-700">
+                    {filteredMemos.length > 0 ? (
+                      filteredMemos.map((memo) => (
                         <tr key={memo.id}>
-                          <td colSpan={3} className="p-0">
+                          <td colSpan={4} className="p-0">
                             <div
-                              onClick={() => handleRowClick(memo.url, memo.id)}
-                              className="leader-memo-row grid grid-cols-3 items-center rounded shadow-sm cursor-pointer px-2 py-2 transition"
-                              data-memo-id={memo.id}
+                              onClick={() => markAsRead(memo.id)}
+                              className="grid grid-cols-4 items-center rounded shadow-sm cursor-pointer px-2 py-2"
                               style={{
-                                border: `2px solid ${borderHex(memo.color)}`,
-                                backgroundColor: isRead ? "#ffffff" : "#e5e7eb",
+                                border: `2px solid ${borderColor(memo.color)}`,
+                                backgroundColor: readMemos.includes(memo.id)
+                                  ? "#ffffff"
+                                  : "#e5e7eb",
                               }}
                             >
-                              <div className="truncate pr-2 font-medium">{memo.title}</div>
-                              <div className="truncate px-2">{memo.description}</div>
+                              <div className="truncate font-medium pr-2">
+                                {memo.title}
+                              </div>
+                              <div className="truncate px-2">
+                                {memo.description}
+                              </div>
                               <div className="text-sm text-gray-600 pr-2">
-                                {new Date(memo.date).toLocaleDateString(undefined, {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "2-digit",
-                                })}
+                                {new Date(memo.date).toLocaleDateString()}
+                              </div>
+                              <div className="flex justify-end gap-2">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditMemo(memo);
+                                    setShowEditModal(true);
+                                  }}
+                                  className="border-2 border-green-600 rounded-full px-3 py-2"
+                                >
+                                  <Icon
+                                    icon="mdi:pencil"
+                                    width={18}
+                                    height={18}
+                                    style={{ color: "#28a745" }}
+                                  />
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setMemos((prev) =>
+                                      prev.filter((m) => m.id !== memo.id)
+                                    );
+                                  }}
+                                  className="border-2 border-red-600 rounded-full px-3 py-2"
+                                >
+                                  <Icon
+                                    icon="mdi:trash-can"
+                                    width={18}
+                                    height={18}
+                                    style={{ color: "#dc3545" }}
+                                  />
+                                </button>
                               </div>
                             </div>
                           </td>
                         </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
-          )}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          className="text-center py-6 text-gray-500"
+                        >
+                          No memos available at the moment.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
-          {/* Tile View */}
-          {view === "tiles" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filtered.length === 0 ? (
-                <p className="text-center py-6 text-gray-500 col-span-full">No memos available at the moment.</p>
-              ) : (
-                filtered.map((memo) => {
-                  const files =
-                    typeof memo.file_name === "string"
-                      ? (() => {
-                          try {
-                            const parsed = JSON.parse(memo.file_name);
-                            return Array.isArray(parsed) ? parsed : [memo.file_name];
-                          } catch {
-                            return [memo.file_name];
-                          }
-                        })()
-                      : Array.isArray(memo.file_name)
-                      ? memo.file_name
-                      : [];
-
-                  const isRead = readSet.has(String(memo.id));
-
-                  return (
+            {/* Tile View */}
+            {view === "tiles" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredMemos.length > 0 ? (
+                  filteredMemos.map((memo) => (
                     <div
                       key={memo.id}
-                      onClick={() => handleRowClick(memo.url, memo.id)}
-                      className="leader-tile-memo p-4 border rounded-lg shadow cursor-pointer transition relative group overflow-hidden"
-                      data-memo-id={memo.id}
+                      className="p-4 rounded-lg shadow cursor-pointer transition"
                       style={{
-                        border: `2px solid ${borderHex(memo.color)}`,
-                        backgroundColor: isRead ? "#ffffff" : "#e5e7eb",
+                        border: `2px solid ${borderColor(memo.color)}`,
+                        backgroundColor: readMemos.includes(memo.id)
+                          ? "#ffffff"
+                          : "#e5e7eb",
                       }}
+                      onClick={() => markAsRead(memo.id)}
                     >
-                      <h2 className="text-lg font-semibold mb-2 text-gray-800">{memo.title}</h2>
-
-                      <p className="text-gray-600 mb-2">{memo.description}</p>
-
+                      <h2 className="text-lg font-semibold mb-2 truncate">
+                        {memo.title}
+                      </h2>
+                      <p className="text-gray-600 mb-2 line-clamp-3">
+                        {memo.description}
+                      </p>
                       <div className="text-sm text-gray-500 mb-3">
-                        {new Date(memo.date).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "long",
-                          day: "2-digit",
-                        })}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 z-10 relative">
-                        {files.map((file, i) => {
-                          const ext = String(file).split(".").pop() || "";
-                          const icon = extToIcon(ext);
-                          return (
-                            <button
-                              key={i}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                // placeholder download / open
-                                // Replace with real download link or react-router navigation later
-                                alert(`Download ${file} (placeholder)`);
-                              }}
-                              className="flex items-center gap-2 px-3 py-2 border rounded-lg shadow-md bg-[#E8F1FF] hover:shadow-lg transition stop-row-click"
-                              style={{ borderColor: "#B3D4FC" }}
-                              title={`Download ${file}`}
-                            >
-                              <span className={`${icon.color} font-semibold text-xs`}>{icon.label}</span>
-                              <span className="text-sm font-medium text-[#1E3A8A] truncate max-w-[120px]">
-                                {String(file).length > 20 ? String(file).slice(0, 17) + "..." : file}
-                              </span>
-                            </button>
-                          );
-                        })}
+                        {new Date(memo.date).toLocaleDateString()}
                       </div>
                     </div>
-                  );
-                })
-              )}
-            </div>
-          )}
+                  ))
+                ) : (
+                  <p className="text-center py-6 text-gray-500 col-span-full">
+                    No memos available at the moment.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    
   );
-}
+};
+
+export default MemoPage;

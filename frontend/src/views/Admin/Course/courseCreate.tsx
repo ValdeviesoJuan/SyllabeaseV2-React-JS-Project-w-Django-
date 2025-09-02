@@ -316,8 +316,12 @@ const CourseCreate: React.FC = () => {
                 type="submit"
                 className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold m-auto mt-8 mb-4"
                 style={{ background: "#d7ecf9" }}
-                onMouseOver={(e) => ((e.currentTarget.style.background = "#c3dff3"))}
-                onMouseOut={(e) => ((e.currentTarget.style.background = "#d7ecf9"))}
+                onMouseOver={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.currentTarget.style.background = "#c3dff3";
+                }}
+                onMouseOut={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.currentTarget.style.background = "#d7ecf9";
+                }}
               >
                 <svg
                   className="w-5 h-5 mr-2"

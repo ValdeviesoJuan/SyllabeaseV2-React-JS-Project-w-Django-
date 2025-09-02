@@ -21,6 +21,16 @@ import CurrCreate from "./views/Admin/Curriculum/currCreate";
 import UserEdit from "./views/Admin/user_edit";
 import UserRolesCreate from "./views/Admin/user_roles_create";
 import UserRolesEdit from "./views/Admin/user_roles_edit";
+import BlCreateSyllabus from "./views/bayanihan_leader/bl_create_syllabus";
+import EditSyllabus from "./views/bayanihan_leader/bl_syllEdit";
+import ReviewForm from "./views/bayanihan_leader/reviewform";
+import TOSView from "./views/bayanihan_leader/tos_view"; 
+import TosEditRow from "./views/bayanihan_leader/tos_editrow";
+import TosEdit from "./views/bayanihan_leader/tos_edit";
+import TOSCreate from "./views/bayanihan_leader/tos_create";
+import TosComment from "./views/bayanihan_leader/tos_comment";
+
+
 
 
 function App() {
@@ -60,6 +70,15 @@ function App() {
           }
         />
         <Route path="/admin/user/roles/edit/:id" element={<UserRolesEdit />} />
+        <Route path="/bayanihan-leader/syllabus/create" element={<BlCreateSyllabus />} />
+        <Route path="/bayanihan-leader/syllabus/edit/:id" element={<EditSyllabus />} />
+        <Route path="/bayanihan-leader/reviewform" element={<ReviewForm />} />
+        <Route path="/tos/view" element={<TOSView />} />
+        <Route path="/tos/editrow/:id" element={<TosEditRow />} />
+        <Route path="/tos/edit" element={<TosEdit />} />
+        <Route path="/tos/create" element={<TOSCreate />} />
+        <Route path="/tos/comment" element={<TosComment />} />
+
       </Routes>
     </Router>
   );

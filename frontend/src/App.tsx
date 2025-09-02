@@ -18,6 +18,7 @@ import Memos from "./views/dean/memo/memos";
 import EditMemo from "./views/dean/memo/edit";
 import MemoShow from "./views/dean/memo/show";
 import Register from "./views/auth/register";
+import HomePage from "./views/bayanihan_teacher/home";
 
 
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/dean/memos/edit/:id" element={<EditMemo />} />
         <Route path="/dean/memos/:id" element={<MemoShow />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/bayanihan-teacher/home" element={<HomePage />} />
 
 
 

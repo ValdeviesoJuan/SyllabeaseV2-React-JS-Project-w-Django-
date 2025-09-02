@@ -27,7 +27,7 @@ export default function DeanLayout({ children }: LayoutProps) {
       {/* Main content wrapper */}
       <div className="">
         {/* Top Navbar */}
-        <nav className="fixed top-0 left-0 right-0 bg-white shadow px-6 py-3 flex items-center justify-between z-50 w-[full]">
+        <nav className="fixed top-0 left-0 right-0 bg-white shadow px-6 py-2 flex items-center justify-between z-50 w-[full]">
           <img src="/assets/Sample/syllabease.png" alt="SyllabEase" className="h-8" />
 
           <div className="flex items-center space-x-4">

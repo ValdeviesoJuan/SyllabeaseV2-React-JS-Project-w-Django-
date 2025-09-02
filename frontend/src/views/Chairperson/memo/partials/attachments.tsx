@@ -64,15 +64,12 @@ export function AttachmentItem({ file, downloadUrl, onDownload, className }: Att
     <Card
       data-testid="attachment-item"
       className={[
-        "max-w-lg border border-blue-200 bg-blue-50",
-        "transition-all duration-200",
-        "hover:shadow-lg hover:-translate-y-0.5",
-        "shadow-sm",
-        "rounded-xl",
-        "p-4",
-        "w-full",
-        className ?? "",
+        "max-w-lg w-full p-4 rounded-xl shadow-sm",
+        "border border-blue-200",
+        "transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5",
+        className ?? ""
       ].join(" ")}
+      style={{ backgroundColor: "#ffffff" }}  // separate prop, not inside className
     >
       <div className="flex items-center gap-4">
         <div className="shrink-0">

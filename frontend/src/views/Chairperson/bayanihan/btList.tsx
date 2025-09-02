@@ -1,104 +1,131 @@
 import React from "react";
+import { Button } from "flowbite-react";
+import ChairSidebarLayout from "../../layouts/chairSidebar";
+import { useNavigate } from "react-router-dom";
 
-const BayanihanList: React.FC = () => {
+// Mocked Bayanihan Teams data (replace with API when backend is ready)
+const bayanihanTeams = [
+  {
+    id: 1,
+    name: "Team Alpha",
+    members: ["Juan Dela Cruz", "Maria Santos"],
+    created_at: "2024-08-01",
+  },
+  {
+    id: 2,
+    name: "Team Beta",
+    members: ["Pedro Reyes", "Ana Cruz"],
+    created_at: "2024-08-10",
+  },
+  // Add more mock teams as needed
+];
+
+const BtList: React.FC = () => {
+  const navigate = useNavigate(); // ✅ moved inside component
+
+  const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.currentTarget as HTMLButtonElement).style.background = "#c3dff3";
+  };
+
+  const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.currentTarget as HTMLButtonElement).style.background = "#d7ecf9";
+  };
+
   return (
-    <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg dark:border-gray-700 mt-14">
-      <div id="whole">
-        <div>
-          {/* Header with Create Button */}
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="font-bold text-4xl text-[#201B50]">Bayanihan Teams</h1>
+      <div
+        className="min-h-screen pt-14 bg-[#EEEEEE]"
+        style={{
+          backgroundImage: "url('/assets/Wave.png')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg mt-14 max-w-6xl mx-auto">
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="font-bold text-4xl text-[#201B50]">Bayanihan Teams</h1>
+              <form>
+                <Button
+                  type="button"
+                  className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2"
+                  style={{ background: "#d7ecf9" }}
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => navigate("/chairperson/bayanihan/create")}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="black" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <circle cx="7" cy="10" r="3" />
+                    <circle cx="17" cy="10" r="3" />
+                    <circle cx="12" cy="16" r="3" />
+                    <path d="M2 20c0-2.5 3-4.5 5-4.5s5 2 5 4.5" />
+                    <path d="M12 20c0-2.5 3-4.5 5-4.5s5 2 5 4.5" />
+                  </svg>
+                  Create Bayanihan Team
+                </Button>
+              </form>
+            </div>
 
-            {/* Backend form commented out */}
-            {/* <form action="{{ route('chairperson.createBTeam') }}" method="GET">
-                @csrf
-            */}
-            <button
-              type="button"
-              className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2"
-              style={{ background: "#d7ecf9" }}
-              onMouseOver={(e) => (e.currentTarget.style.background = "#c3dff3")}
-              onMouseOut={(e) => (e.currentTarget.style.background = "#d7ecf9")}
-              // TODO: Implement navigation to Create Team page
-            >
-              {/* SVG Icon */}
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="black"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="7" cy="10" r="3" />
-                <circle cx="17" cy="10" r="3" />
-                <circle cx="12" cy="16" r="3" />
-                <path d="M2 20c0-2.5 3-4.5 5-4.5s5 2 5 4.5" />
-                <path d="M12 20c0-2.5 3-4.5 5-4.5s5 2 5 4.5" />
-              </svg>
-              Create Bayanihan Team
-            </button>
-            {/* </form> */}
+            {/* Bayanihan Teams Table */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 border">
+                <thead className="bg-[#d7ecf9]">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Team Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Members
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Created At
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {bayanihanTeams.map((team) => (
+                    <tr key={team.id}>
+                      <td className="px-6 py-4 whitespace-nowrap font-semibold">{team.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {team.members.join(", ")}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">{team.created_at}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex gap-2">
+                          <Button color="info" size="xs" onClick={() => alert("View Team (no backend yet)")}>
+                            View
+                          </Button>
+                          <Button
+                            color="warning"
+                            size="xs"
+                            onClick={() => navigate(`/chairperson/bayanihan/edit/${team.id}`)} // ✅ navigate with ID
+                          >
+                            Edit
+                          </Button>
+                          <Button color="failure" size="xs" onClick={() => alert("Delete Team (no backend yet)")}>
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                  {bayanihanTeams.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="text-center py-8 text-gray-500">
+                        No Bayanihan Teams found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-
-          {/* Livewire component replaced with placeholder */}
-          {/* <livewire:chair-b-teams /> */}
-          <div className="text-gray-500 text-center">
-            {/* TODO: Fetch and display Bayanihan Teams list from API */}
-            <p>Bayanihan Teams list will appear here.</p>
-          </div>
-
-          {/* Backend loop for team cards commented out */}
-          {/*
-          <div className="ml-10 mr-5">
-            @foreach ($bgroups as $bgroup)
-              <div className="flex grid-cols-4 gap-4">
-                <div className="w-60 h-72 h-auto min-h-fit bg-white rounded-xl shadow-xl hover:scale-105 transition ease-in-out">
-                  <div className="w-fit">
-                    @php
-                      $imageNumber = ($loop->iteration - 1) % 10 + 1;
-                    @endphp
-                    <img className="rounded-t-xl h-40" src="/assets/bg/{{ $imageNumber }}.png" alt="">
-                  </div>
-                  <div className="text-xl font-semibold mx-3 text-neutral-900 my-1">
-                    {{ $bgroup->course_code }} - {{ $bgroup->bg_school_year }}
-                  </div>
-                  <div className="text-neutral-900 font-normal mx-3">
-                    <h4 className="font-medium">Leader:</h4>
-                    @foreach ($bleaders[$bgroup->bg_id] ?? [] as $leader)
-                      <p>{{ $leader->lastname }}, {{ $leader->firstname }}</p>
-                    @endforeach
-                  </div>
-                  <div className="text-neutral-900 font-normal mx-3">
-                    <h4 className="font-medium">Members:</h4>
-                    @foreach ($bmembers[$bgroup->bg_id] ?? [] as $member)
-                      <p>{{ $member->lastname }}, {{ $member->firstname }}</p>
-                    @endforeach
-                  </div>
-                  <div className="mr-3 justify-end flex ">
-                    <form action="{{ route('chairperson.editBTeam', $bgroup->bg_id) }}" method="GET">
-                      @csrf
-                      <button type="submit" className="bg-blue p-1 rounded-lg mr-2 mb-2 hover:bg-green">
-                        <!-- Edit Icon -->
-                      </button>
-                    </form>
-
-                    <form action="{{ route('chairperson.destroyBTeam',$bgroup->bg_id) }}" method="Post">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" className="bg-blue p-1 rounded-lg mr-2 shadow-lg hover:bg-pink">
-                        <!-- Delete Icon -->
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            @endforeach
-          </div>
-          */}
         </div>
       </div>
-    </div>
   );
 };
 
-export default BayanihanList;
+export default BtList;

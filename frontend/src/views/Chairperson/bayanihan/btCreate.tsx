@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ChairSidebarLayout from "../../layouts/chairSidebar";
 
 const BtCreate: React.FC = () => {
   const [courseId, setCourseId] = useState("");

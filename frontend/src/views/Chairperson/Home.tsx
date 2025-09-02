@@ -1,89 +1,156 @@
-import React from "react";
-import { Button } from "flowbite-react";
-import Select from "react-select";
+import React, { useState } from "react";
+import { Button, Alert } from "flowbite-react";
+import ChairSidebar from "../layouts/chairSidebar";
+import ChairpersonNav from "../layouts/chairpersonNav";
+import BayanihanTeams from "../components/chair-b-teams";
 
-interface Props {
-  missingSignature?: boolean; // optional, default false
+const IconPlus = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <path
+      fillRule="evenodd"
+      d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
 }
 
-const Home: React.FC<Props> = ({ missingSignature = false }) => {
-  const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.background = "#c3dff3";
+interface Notification {
+  id: string;
+  data: {
+    for: string;
+    course_code: string;
+    bg_school_year: string;
+    message: string;
+    action_url: string;
+  };
+  created_at: Date;
+}
+
+const mockUser: User = {
+  firstname: "John",
+  lastname: "Doe",
+  email: "john.doe@example.com",
+};
+
+const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    data: {
+      for: "CS",
+      course_code: "CS101",
+      bg_school_year: "2024-2025",
+      message: "New syllabus submitted for review",
+      action_url: "/syllabus/1",
+    },
+    created_at: new Date("2024-01-15T10:30:00"),
+  },
+];
+
+const Home: React.FC = () => {
+  const [user] = useState<User>(mockUser);
+  const [notifications] = useState<Notification[]>(mockNotifications);
+  const [activeRoute, setActiveRoute] = useState("home");
+  const [missingSignature] = useState(true);
+
+  const handleRouteChange = (route: string) => {
+    setActiveRoute(route);
+    console.log(`Navigating to: ${route}`);
   };
 
-  const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.style.background = "#d7ecf9";
+  const handleLogout = () => {
+    console.log("Logging out...");
   };
 
-  // Example dropdown options for searchable select
-  const options = [
-    { value: "team1", label: "Team 1" },
-    { value: "team2", label: "Team 2" },
-    { value: "team3", label: "Team 3" },
-  ];
+  const handleCreateBayanihanTeam = () => {
+    console.log("Creating Bayanihan Team...");
+  };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-no-repeat bg-top bg-fixed"
-      style={{ backgroundImage: "url('/assets/Wave.png')" }}
-    >
-      {/* Missing Signature Alert */}
+    <div className="min-h-screen bg-transparent">
+      <style>{`
+        body {
+          background-image: url('/assets/Wave.png');
+          background-repeat: no-repeat;
+          background-position: top;
+          background-attachment: fixed;
+          background-size: cover;
+          background-color: transparent;
+        }
+      `}</style>
+
       {missingSignature && (
-        <div className="absolute z-50 top-10 left-1/2 transform -translate-x-1/2 w-[500px] p-4 rounded-lg shadow-lg border border-yellow-400 bg-yellow-50 text-green-600 flex justify-between items-center">
-          <div className="text-sm font-semibold">
-            <strong>Missing Signature:</strong> You haven't uploaded your signature yet.
-          </div>
-          <a
-            href="/profile/edit"
-            className="ml-4 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-1 px-4 rounded-lg transition-all"
-          >
-            Go to Profile
-          </a>
+        <div className="fixed top-10 left-1/2 transform -translate-x-1/2 w-[500px] z-50">
+          <Alert
+            color="warning"
+            className="border border-yellow-400 bg-yellow-50 text-green-600"
+            additionalContent={
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-semibold">
+                  <strong>Missing Signature:</strong> You haven't uploaded your signature yet.
+                </div>
+                <Button
+                  size="sm"
+                  className="ml-4 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold"
+                  onClick={() => handleRouteChange("profile.edit")}
+                >
+                  Go to Profile
+                </Button>
+              </div>
+            }
+          />
         </div>
       )}
 
-      {/* Main Container */}
-      <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg mt-14">
-        <div id="whole">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="font-bold text-4xl text-[#201B50]">Bayanihan Teams</h1>
-            <form action="/chairperson/createBTeam" method="GET">
-              <Button
-                type="submit"
-                className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2"
-                style={{ background: "#d7ecf9" }}
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-              >
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 8v8M8 12h8"
-                    stroke="black"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="12" cy="12" r="10" stroke="black" strokeWidth="1.5" />
-                </svg>
-                Create Bayanihan Team
-              </Button>
-            </form>
+      {/* Import Nav + Sidebar */}
+      <ChairpersonNav
+        user={user}
+        notifications={notifications}
+        activeRoute={activeRoute}
+        handleRouteChange={handleRouteChange}
+        handleLogout={handleLogout}
+      />
+
+      <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
+
+      {/* Main Content */}
+      <div
+        className="absolute p-4 mt-14 flex min-h-screen"
+        style={{
+          top: "150px",   // Y-coordinate
+          left: "330px",  // X-coordinate
+        }}
+      >
+        <div className="p-6 pl-3 pr-3 shadow bg-white border-dashed rounded-lg dark:border-gray-700 w-[1080px] h-2/3">
+          {/* Page Header */}
+          <div className="flex justify-between items-center mb-10">
+            <h1 className="font-bold text-[#201B50]" style={{ fontSize: "2rem" }}>
+              Bayanihan Teams
+            </h1>
+
+            <Button
+              onClick={handleCreateBayanihanTeam}
+              className="bg-blue-100 hover:bg-blue-200 text-black font-semibold border-none hover:scale-105 transition-all"
+              size="sm"
+            >
+              <div className="mr-2">
+                <IconPlus />
+              </div>
+              Create Bayanihan Team
+            </Button>
           </div>
 
-          {/* Example Select (replaces Select2 searchable select) */}
-          <div className="mb-6 w-1/3">
-            <Select options={options} placeholder="Select a team..." />
+          {/* Main Content Area */}
+          <div className="p-8 text-center rounded-lg bg-gray-50">
           </div>
 
-          {/* Placeholder for Livewire component */}
-          <div id="chair-b-teams">
-            {/* Replace this div with React rendering from backend API when ready */}
-          </div>
+          {/* Placeholder */}
+          <BayanihanTeams />
         </div>
       </div>
     </div>

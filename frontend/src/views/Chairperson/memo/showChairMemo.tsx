@@ -1,6 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { Card, Button } from "flowbite-react";
 import Attachments from "./partials/attachments";
+import ChairSidebar from "../../layouts/chairSidebar";
+import ChairpersonNav from "../../layouts/chairpersonNav";
 
 // --- Types ---
 export type MemoUser = {
@@ -43,7 +46,45 @@ const titleColor = (color?: string) => {
   }
 };
 
-export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, className }: ShowChairMemoProps) {
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+interface Notification {
+  id: string;
+  data: {
+    for: string;
+    course_code: string;
+    bg_school_year: string;
+    message: string;
+    action_url: string;
+  };
+  created_at: Date;
+}
+
+const mockUser: User = {
+  firstname: "John",
+  lastname: "Doe",
+  email: "john.doe@example.com",
+};
+
+const mockNotifications: Notification[] = [
+  {
+    id: "1",
+    data: {
+      for: "CS",
+      course_code: "CS101",
+      bg_school_year: "2024-2025",
+      message: "New syllabus submitted for review",
+      action_url: "/syllabus/1",
+    },
+    created_at: new Date("2024-01-15T10:30:00"),
+  },
+];
+
+function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, className }: ShowChairMemoProps) {
   // normalize files to an array
   const files: string[] = useMemo(() => {
     if (!memo.file_name) return [];
@@ -64,18 +105,51 @@ export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, 
     // default fallback
     if (window.history.length > 1) window.history.back();
   };
+  const [user] = useState<User>(mockUser);
+    const [notifications] = useState<Notification[]>(mockNotifications);
+    const [activeRoute, setActiveRoute] = useState("home");
+  const handleRouteChange = (route: string) => {
+    setActiveRoute(route);
+    console.log(`Navigating to: ${route}`);
+  };
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+  };
 
   return (
-    <div
-      style={{ backgroundImage: "url('/assets/Wave.png')" }}
-      className={[
-        "min-h-screen p-4 md:p-6",
-        "bg-[#EEEEEE]",
-        "bg-no-repeat bg-top bg-contain bg-fixed",
-        className ?? "",
-      ].join(" ")}
-    >
-      <Card className="mt-12 max-w-4xl mx-auto shadow rounded-lg">
+    <div className="min-h-screen bg-transparent">
+      <style>{`
+        body {
+          background-image: url('/assets/Wave.png');
+          background-repeat: no-repeat;
+          background-position: top;
+          background-attachment: fixed;
+          background-size: cover;
+          background-color: transparent;
+        }
+      `}</style>
+
+      {/* Import Nav + Sidebar */}
+      <ChairpersonNav
+        user={user}
+        notifications={notifications}
+        activeRoute={activeRoute}
+        handleRouteChange={handleRouteChange}
+        handleLogout={handleLogout}
+      />
+
+      <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
+
+      <Card
+        className="absolute mt-12 max-w-4xl mx-auto shadow rounded-lg"
+        style={{
+          backgroundColor: "#ffffff",
+          top: "70px", // Y-coordinate
+          left: "300px", // X-coordinate
+          right: "20px",
+        }}
+      >
         {/* Header */}
         <div className="mb-6">
           <h1
@@ -94,7 +168,10 @@ export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, 
           </p>
           {memo.user && (
             <p className="text-sm text-gray-500">
-              Uploaded by: <span className="font-medium">{memo.user.firstname} {memo.user.lastname}</span>
+              Uploaded by:{" "}
+              <span className="font-medium">
+                {memo.user.firstname} {memo.user.lastname}
+              </span>
               {memo.user.email ? <span> ({memo.user.email})</span> : null}
             </p>
           )}
@@ -126,12 +203,12 @@ export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, 
           {backHref ? (
             <a
               href={backHref}
-              className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+              className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
             >
               Back to Memos
             </a>
           ) : (
-            <Button color="light" onClick={handleBack}>
+            <Button className="bg-gray-200 text-black" onClick={handleBack}>
               Back to Memos
             </Button>
           )}
@@ -140,6 +217,27 @@ export default function ShowChairMemo({ memo, getDownloadUrl, onBack, backHref, 
     </div>
   );
 }
+
+// ✅ Wrapper to handle missing `memo` prop and use `location.state`
+export function ShowChairMemoWrapper() {
+  const location = useLocation();
+  const { id } = useParams();
+  const memo = location.state as ShowMemo | undefined;
+
+  if (!memo) {
+    return (
+      <div className="p-6 text-center">
+        <h1 className="text-xl font-bold">No Memo Found</h1>
+        <p>Please go back to the memo list.</p>
+      </div>
+    );
+  }
+
+  return <ShowChairMemo memo={memo} />;
+}
+
+export default ShowChairMemoWrapper;
+
 
 /*
 Placement:

@@ -56,7 +56,7 @@ const ChairReportsPage: React.FC = () => {
   return (
     <div
       className="min-h-screen bg-no-repeat bg-top bg-fixed bg-contain"
-      style={{ backgroundImage: "url('/assets/Wave.png')" }}
+      style={{ backgroundImage: "url(/assets/Wave.png)" }}
     >
       <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
       <ChairpersonNav

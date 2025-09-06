@@ -1,128 +1,162 @@
-import React from "react";
-import DeanSidebar from "../../layouts/deanSidebar";
-import DeanHeader from "../../layouts/deanHeader";
+import React, { useState } from "react";
 
 export default function AssignChair() {
+  const [chairperson, setChairperson] = useState("");
+  const [department, setDepartment] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const payload = {
+      chairperson,
+      department,
+      startDate,
+      endDate,
+    };
+
+    console.log("Assign Chair:", payload);
+
+    setTimeout(() => {
+      setLoading(false);
+      alert("Chairperson assigned successfully! (dummy response)");
+    }, 1500);
+  };
+
   return (
-    
-    <div className="flex">
-      {/* Sidebar & header*/}
-      <DeanHeader children={undefined} />
-      <DeanSidebar />
+    <div className="flex-1">
+      <div className="min-h-screen flex items-center justify-center pt-12" 
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}> 
 
-      {/* Main Content */}
-      <div className="flex-1 "> 
-        <div
-          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain pl-52"
-          style={{ backgroundImage: "url(/assets/Wave1.png)" }}
-        >
-          <div className="max-w-md bg-gradient-to-r from-[#FFF] to-[#dbeafe] w-[500px] p-6 rounded-lg shadow-lg">
-            <img
-              className="edit_user_img text-center mt-4 mb-6 w-[300px] m-auto"
-              src="/assets/Assign Chairperson.png"
-              alt="SyllabEase Logo"
-            />
+        {/* Card */}
+        <div className="max-w-md bg-white w-[560px] p-6 px-8 rounded-lg shadow-lg relative">
+          <img
+            className="text-center mt-4 w-[330px] m-auto mb-6"
+            src="/assets/Assign Chairperson.png"
+            alt="Assign Chairperson"
+          />
 
-            <form>
-              {/* Chairperson Dropdown */}
-              <div className="mb-6">
-                <div>
-                  <label htmlFor="user_id">Chairperson</label>
-                </div>
-                <select
-                  name="user_id"
-                  id="user_id"
-                  className="px-1 py-[6px] w-[400px] border rounded border-gray"
+          <form onSubmit={handleSubmit}>
+            {/* Chairperson Dropdown */}
+            <div className="m-6">
+              <label className="flex mb-1" htmlFor="user_id">
+                Chairperson
+              </label>
+              <select
+                id="user_id"
+                className="w-full px-3 py-2 border rounded border-gray-400"
+                value={chairperson}
+                onChange={(e) => setChairperson(e.target.value)}
+                required
+              >
+                <option value="">Select a chairperson</option>
+                <option value="1">Doe, John</option>
+                <option value="2">Smith, Jane</option>
+                <option value="3">Garcia, Alex</option>
+              </select>
+            </div>
+
+            {/* Department Dropdown */}
+            <div className="m-6">
+              <label className="flex mb-1" htmlFor="department_id">
+                Department
+              </label>
+              <select
+                id="department_id"
+                className="w-full px-3 py-2 border rounded border-gray-400"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                required
+              >
+                <option value="">Select a department</option>
+                <option value="1">Computer Science</option>
+                <option value="2">Information Technology</option>
+                <option value="3">Engineering</option>
+              </select>
+            </div>
+
+            {/* Validity Dates */}
+            <div className="grid gap-6 md:grid-cols-2 m-6">
+              <div>
+                <label className="flex mb-1" htmlFor="start_validity">
+                  Start of Validity
+                </label>
+                <input
+                  type="date"
+                  id="start_validity"
+                  className="w-full px-3 py-2 border rounded border-gray-400"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
                   required
-                >
-                  <option value="1">Doe, John</option>
-                  <option value="2">Smith, Jane</option>
-                  <option value="3">Garcia, Alex</option>
-                </select>
+                />
               </div>
-
-              {/* Department Dropdown */}
-              <div className="mb-6">
-                <div>
-                  <label htmlFor="department_id">Department</label>
-                </div>
-                <select
-                  name="department_id"
-                  id="department_id"
-                  className="px-1 py-[6px] w-[400px] border rounded border-black"
-                  required
-                >
-                  <option value="1">Computer Science</option>
-                  <option value="2">Information Technology</option>
-                  <option value="3">Engineering</option>
-                </select>
+              <div>
+                <label className="flex mb-1" htmlFor="end_validity">
+                  End of Validity
+                </label>
+                <input
+                  type="date"
+                  id="end_validity"
+                  className="w-full px-3 py-2 border rounded border-gray-400"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
               </div>
+            </div>
 
-              {/* Validity Dates */}
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="mb-3">
-                  <label htmlFor="start_validity">Start of Validity</label>
-                  <input
-                    type="date"
-                    name="start_validity"
-                    id="start_validity"
-                    className="px-1 py-[6px] w-[190px] border rounded h-[38px] border-[#a3a3a3]"
-                    required
+            {/* Submit Button */}
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="whitespace-nowrap rounded-xl px-6 py-2 mt-4 mb-4 flex items-center gap-2 font-semibold text-black 
+                          bg-blue-500 hover:bg-blue-100 transition ease-in-out hover:scale-105 disabled:opacity-50"
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="black"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="end_validity">End of Validity</label>
-                  <input
-                    type="date"
-                    name="end_validity"
-                    id="end_validity"
-                    className="px-1 py-[6px] w-[190px] border rounded h-[38px] border-[#a3a3a3]"
+                  <circle cx="9" cy="7" r="4" />
+                  <path
+                    d="M20 8v6M23 11h-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-                </div>
-              </div>
+                </svg>
+                {loading ? "Assigning..." : "Assign Chair"}
+              </button>
+            </div>
+          </form>
 
-              {/* Submit Button */}
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2 m-auto mt-8 mb-4"
-                  style={{ background: "#d7ecf9" }}
-                  onMouseOver={(e) => (e.currentTarget.style.background = "#c3dff3")}
-                  onMouseOut={(e) => (e.currentTarget.style.background = "#d7ecf9")}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
-                      stroke="black"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="9"
-                      cy="7"
-                      r="4"
-                      stroke="black"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M20 8v6M23 11h-6"
-                      stroke="black"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Assign Chair
-                </button>
-              </div>
-            </form>
-          </div>
+          {/* Loading Overlay */}
+          {loading && (
+            <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center rounded-lg">
+              <img
+                src="/assets/Sample/loading.gif"
+                alt="loading..."
+                className="w-16"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

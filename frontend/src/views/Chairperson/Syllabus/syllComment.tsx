@@ -106,7 +106,7 @@ const dean = { signature: "" };
 
 const SyllComment: React.FC = () => {
   return (
-    <div className="font-thin mt-14 bg-[url('/assets/Wave.png')] bg-no-repeat bg-top bg-fixed bg-contain min-h-screen">
+    <div style={{ backgroundImage: "url(/assets/Wave.png)"}} className="font-thin mt-14 bg-no-repeat bg-top bg-fixed bg-contain min-h-screen">
       {/* Finish Button */}
       <div className="flex justify-end mr-32">
         <div className="w-[130px] py-1 rounded-lg bg-[#2468d2] hover:scale-105 transition ease-in-out shadow-lg text-center">

@@ -144,18 +144,15 @@ const CurriculaPage: React.FC = () => {
         top: "80px", // distance from top (nav bar height)
         left: "280px", // distance from left (sidebar width)
         right: "20px", // optional right padding
-      }}
-    >
-      <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }} 
+    > 
       <div className="p-4 pb-10 shadow bg-white border-dashed rounded-lg dark:border-gray-700">
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-bold text-[#201B50]" style={{ fontSize: "2rem" }}>

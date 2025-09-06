@@ -255,7 +255,7 @@ const SyllView: React.FC = () => {
         className="absolute"
         style={{
           top: "57px", // distance from top (nav bar height)
-          backgroundImage: "url('/assets/Wave.png')",
+          backgroundImage: "url(/assets/Wave.png)",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "top",
           backgroundAttachment: "fixed",

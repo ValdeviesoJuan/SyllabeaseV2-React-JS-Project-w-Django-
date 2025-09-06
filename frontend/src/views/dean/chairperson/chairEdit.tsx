@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import DeanSidebar from "../../layouts/deanSidebar";
-import DeanHeader from "../../layouts/deanHeader";
+
 
 // Mock data for users, departments, and a chair record
 const users = [
@@ -27,6 +26,7 @@ export default function ChairEdit() {
     end_validity: chair.end_validity,
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -36,149 +36,142 @@ export default function ChairEdit() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (form.end_validity && form.end_validity < form.start_validity) {
       setError("End of validity cannot be before start of validity.");
       return;
     }
+
     setError("");
-    alert("Chair updated! (Frontend only demo)");
+    setLoading(true);
+
+    // Simulate request
+    setTimeout(() => {
+      setLoading(false);
+      alert("Chair updated! (Frontend only demo)");
+    }, 1000);
   };
 
   return (
-    <div className="flex">
-      {/* Sidebar & header*/}
-      <DeanHeader children={undefined} />
-      <DeanSidebar />
+    <div className="flex-1 min-h-screen flex items-center justify-center pt-20 bg-no-repeat bg-top bg-cover bg-transparent" style={{ backgroundImage: "url(/assets/Wave.png)" }}>
+      {/* Card */}
+      <div className="max-w-md bg-white w-full sm:w-[560px] p-6 px-8 rounded-lg shadow-lg relative">
+        <img
+          className="edit_user_img text-center mt-4 mb-6 w-full max-w-[280px] m-auto"
+          src="/assets/Edit Chairperson.png"
+          alt="SyllabEase Logo"
+        />
 
-      {/* Main Content */}
-      <div className="flex-1">
-        <div
-          className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-contain pl-52"
-          style={{ backgroundImage: "url(/assets/Wave1.png)" }}
-        >
-          <div className="max-w-md bg-gradient-to-r from-[#FFF] to-[#dbeafe] w-[500px] p-6 rounded-lg shadow-lg">
-            <img
-              className="edit_user_img text-center mt-4 mb-6 w-[280px] m-auto"
-              src="/assets/Edit Chairperson.png"
-              alt="SyllabEase Logo"
-            />
+        <form onSubmit={handleSubmit}>
+            {/* Chairperson Dropdown */}
+            <div className="mb-6">
+              <label htmlFor="user_id" className="block mb-1">
+                Chairperson
+              </label>
+              <select
+                name="user_id"
+                id="user_id"
+                className="px-1 py-1 w-full max-w-[400px] border rounded border-black"
+                value={form.user_id}
+                onChange={handleChange}
+                required
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.lastname}, {user.firstname}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <form onSubmit={handleSubmit}>
-              {/* Chairperson Dropdown */}
-              <div className="mb-6">
-                <div>
-                  <label htmlFor="user_id">Chairperson</label>
-                </div>
-                <select
-                  name="user_id"
-                  id="user_id"
-                  className="px-1 py-[6px] w-[400px] border rounded border-black"
-                  value={form.user_id}
-                  onChange={handleChange}
-                  required
-                >
-                  {users.map((user) => (
-                    <option key={user.id} value={user.id}>
-                      {user.lastname}, {user.firstname}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Department Dropdown */}
-              <div className="mb-6">
-                <div>
-                  <label htmlFor="department_id">Department</label>
-                </div>
-                <select
-                  name="department_id"
-                  id="department_id"
-                  className="px-1 py-[6px] w-[400px] border rounded border-black"
-                  value={form.department_id}
-                  onChange={handleChange}
-                  required
-                >
-                  {departments.map((department) => (
-                    <option
-                      key={department.department_id}
-                      value={department.department_id}
-                    >
-                      {department.department_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Validity Dates */}
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="mb-3">
-                  <label htmlFor="start_validity">Start of Validity</label>
-                  <input
-                    type="date"
-                    name="start_validity"
-                    id="start_validity"
-                    className="px-1 py-[6px] w-[190px] border rounded h-[38px] border-[#a3a3a3]"
-                    value={form.start_validity}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="end_validity">End of Validity</label>
-                  <input
-                    type="date"
-                    name="end_validity"
-                    id="end_validity"
-                    className="px-1 py-[6px] w-[190px] border rounded h-[38px] border-[#a3a3a3]"
-                    value={form.end_validity}
-                    onChange={handleChange}
-                  />
-                  {error && (
-                    <div className="text-red-500 text-sm mt-1">{error}</div>
-                  )}
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="whitespace-nowrap rounded-xl hover:scale-105 transition ease-in-out px-6 py-2 text-black font-semibold flex items-center gap-2 m-auto mt-8 mb-4"
-                  style={{ background: "#d7ecf9" }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.background = "#c3dff3")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.background = "#d7ecf9")
-                  }
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+            {/* Department Dropdown */}
+            <div className="mb-6">
+              <label htmlFor="department_id" className="block mb-1">
+                Department
+              </label>
+              <select
+                name="department_id"
+                id="department_id"
+                className="px-1 py-1 w-full max-w-[400px] border rounded border-black"
+                value={form.department_id}
+                onChange={handleChange}
+                required
+              >
+                {departments.map((department) => (
+                  <option
+                    key={department.department_id}
+                    value={department.department_id}
                   >
-                    <path
-                      d="M12 8v8M8 12h8"
-                      stroke="black"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="black"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-                  Update Chair
-                </button>
+                    {department.department_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Validity Dates */}
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="mb-3">
+                <label htmlFor="start_validity" className="block mb-1">
+                  Start of Validity
+                </label>
+                <input
+                  type="date"
+                  name="start_validity"
+                  id="start_validity"
+                  className="px-1 py-1 w-full max-w-[190px] border rounded h-10 border-gray-400"
+                  value={form.start_validity}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </form>
-          </div>
-        </div>
+              <div className="mb-3">
+                <label htmlFor="end_validity" className="block mb-1">
+                  End of Validity
+                </label>
+                <input
+                  type="date"
+                  name="end_validity"
+                  id="end_validity"
+                  className="px-1 py-1 w-full max-w-[190px] border rounded h-10 border-gray-400"
+                  value={form.end_validity}
+                  onChange={handleChange}
+                />
+                {error && (
+                  <div className="text-red-500 text-sm mt-1">{error}</div>
+                )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="text-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="whitespace-nowrap rounded-xl px-6 py-2 mt-4 mb-4 flex items-center gap-2 font-semibold text-white bg-blue-500 hover:bg-blue-600 transition ease-in-out hover:scale-105 disabled:opacity-50"
+              >
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="9" cy="7" r="4" />
+                  <path
+                    d="M20 8v6M23 11h-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {loading ? "Assigning..." : "Assign Chair"}
+              </button>
+            </div>
+          </form>
       </div>
     </div>
   );

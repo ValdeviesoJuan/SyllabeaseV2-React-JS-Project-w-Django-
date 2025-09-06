@@ -201,7 +201,18 @@ const ChairMemo: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <div className="min-h-screen bg-transparent"
+    
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}
+      >
       {/* Import Nav + Sidebar */}
       <ChairpersonNav
         user={user}
@@ -212,17 +223,6 @@ const ChairMemo: React.FC = () => {
       />
 
       <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
-
-      <style>{`
-        body {
-          background-image: url('/assets/Wave.png');
-          background-repeat: no-repeat;
-          background-position: top;
-          background-attachment: fixed;
-          background-size: cover;
-          background-color: transparent;
-        }
-      `}</style>
 
       <div className="relative w-full h-screen">
         <div className="absolute"

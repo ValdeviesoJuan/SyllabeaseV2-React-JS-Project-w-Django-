@@ -72,17 +72,17 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent">
-      <style>{`
-        body {
-          background-image: url('/assets/Wave.png');
-          background-repeat: no-repeat;
-          background-position: top;
-          background-attachment: fixed;
-          background-size: cover;
-          background-color: transparent;
-        }
-      `}</style>
+    <div className="min-h-screen bg-transparent"
+    style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}
+    > 
 
       {missingSignature && (
         <div className="fixed top-10 left-1/2 transform -translate-x-1/2 w-[500px] z-50">

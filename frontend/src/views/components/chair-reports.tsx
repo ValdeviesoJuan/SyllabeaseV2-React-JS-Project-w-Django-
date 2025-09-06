@@ -38,19 +38,16 @@ const ChairReports: React.FC = () => {
       style={{
         top: "80px",
         left: "280px",
-        right: "20px",
+        right: "20px", 
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh"  
       }}
-    >
-      <style>{`
-        body {
-          background-image: url('/assets/Wave.png');
-          background-repeat: no-repeat;
-          background-position: top;
-          background-attachment: fixed;
-          background-size: cover;
-          background-color: transparent;
-        }
-      `}</style>
+    > 
 
       {/* Cards Section */}
         <div className="flex justify-center gap-6 flex-wrap">

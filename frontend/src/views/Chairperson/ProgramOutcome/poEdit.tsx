@@ -100,18 +100,17 @@ export default function PoEdit({ initialOutcomes = [] }: PoEditProps) {
 
       <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
       <div
-        className="mt-14 p-4 pb-10 m-auto w-11/12 bg-gradient-to-r from-[#FFF] to-[#dbeafe] shadow-lg rounded-lg"
-      >
-        <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+        className="mt-14 p-4 pb-10 m-auto w-11/12 bg-gradient-to-r from-[#FFF] to-[#dbeafe] shadow-lg rounded-lg" 
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}
+      > 
         <div className="absolute" style={{ top: "90px", left: "330px" }}>
           <img
             className="edit_user_img text-center p-6 mt-4 w-[400px] m-auto mb-6"

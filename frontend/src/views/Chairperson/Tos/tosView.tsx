@@ -162,19 +162,16 @@ const TosView: React.FC = () => {
           top: "60px",
           left: "350px",
           right: "50px",
-          bottom: "200px",
+          bottom: "200px", 
+          backgroundImage: `url(/assets/Wave.png)`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "top",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundColor: "transparent",
+          minHeight: "100vh"  
         }}
-      >
-        <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+      > 
         {/* Notices */}
         {tos.chair_returned_at ? (
           <div className="flex flex-col items-center justify-center border-2 border-yellow-400 bg-opacity-75 w-[500px] lg:w-[800px] rounded-lg bg-white py-6 mt-6 mx-auto">

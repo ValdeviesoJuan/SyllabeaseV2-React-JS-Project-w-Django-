@@ -35,7 +35,7 @@ const BtList: React.FC = () => {
       <div
         className="min-h-screen pt-14 bg-[#EEEEEE]"
         style={{
-          backgroundImage: "url('/assets/Wave.png')",
+          backgroundImage: "url(/assets/Wave.png)",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",

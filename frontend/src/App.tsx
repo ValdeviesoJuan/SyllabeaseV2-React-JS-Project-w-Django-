@@ -1,4 +1,3 @@
-// App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // ================= Chairperson Views =================
@@ -53,6 +52,7 @@ function App() {
       <Routes>
         {/* Auth */}
         <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
 
         {/* Chairperson */}

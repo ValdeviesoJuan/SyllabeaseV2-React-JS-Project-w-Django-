@@ -28,17 +28,16 @@ export default function AssignChair() {
 
   return (
     <div className="flex-1">
-      <div className="min-h-screen flex items-center justify-center pt-12">
-        <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+      <div className="min-h-screen flex items-center justify-center pt-12" 
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}> 
 
         {/* Card */}
         <div className="max-w-md bg-white w-[560px] p-6 px-8 rounded-lg shadow-lg relative">

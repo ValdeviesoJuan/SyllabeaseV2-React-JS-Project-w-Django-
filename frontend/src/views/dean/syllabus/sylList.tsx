@@ -37,7 +37,7 @@ const SyllabusHome: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: "url('/assets/Wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

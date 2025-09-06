@@ -96,7 +96,7 @@ export default function Dashboard({
       <BlSidebar />
       {/* Main Dashboard Content */}
       <div
-        style={{ backgroundImage: "url('/assets/Wave.png')" }}>
+        style={{ backgroundImage: "url(/assets/Wave.png)" }}>
         {/* Floating Alert */}
         <div className="absolute z-50 top-10 left-1/2 -translate-x-1/2 w-[500px] p-4 rounded-lg shadow-lg border border-yellow-400 bg-yellow-100 text-green-600">
           <div className="space-y-3 text-sm font-semibold">

@@ -53,7 +53,7 @@ export default function ChairEdit() {
   };
 
   return (
-    <div className="flex-1 min-h-screen flex items-center justify-center pt-20 bg-no-repeat bg-top bg-cover bg-transparent" style={{ backgroundImage: "url('/assets/Wave.png')" }}>
+    <div className="flex-1 min-h-screen flex items-center justify-center pt-20 bg-no-repeat bg-top bg-cover bg-transparent" style={{ backgroundImage: "url(/assets/Wave.png)" }}>
       {/* Card */}
       <div className="max-w-md bg-white w-full sm:w-[560px] p-6 px-8 rounded-lg shadow-lg relative">
         <img

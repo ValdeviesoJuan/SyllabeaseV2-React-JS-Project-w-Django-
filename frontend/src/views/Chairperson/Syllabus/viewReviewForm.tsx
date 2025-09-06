@@ -174,7 +174,7 @@ const ViewReviewForm: React.FC = () => {
     <div
       className="min-h-screen flex justify-center"
       style={{
-        backgroundImage: "url('/assets/wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
         backgroundAttachment: "fixed",

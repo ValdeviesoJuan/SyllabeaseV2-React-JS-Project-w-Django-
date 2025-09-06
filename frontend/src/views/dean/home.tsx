@@ -46,7 +46,7 @@ const DeanHome: React.FC = () => {
       <div
         className="flex-1 p-4 mt-14 min-h-screen"
         style={{
-          backgroundImage: 'url("/assets/Wave.png")',
+          backgroundImage: 'url(/assets/Wave.png)',
           backgroundRepeat: "no-repeat",
           backgroundPosition: "top",
           backgroundAttachment: "fixed",

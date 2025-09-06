@@ -29,7 +29,7 @@ const DepartmentHome: React.FC = () => {
     <div
       className="min-h-screen flex"
       style={{
-        backgroundImage: "url('/assets/Wave.png')",
+        backgroundImage: "url(/assets/Wave.png)",
         backgroundColor: "#EEEEEE",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",

@@ -97,18 +97,17 @@ export default function PoCreate() {
 
       <ChairSidebar activeRoute={activeRoute} handleRouteChange={handleRouteChange} />
       <div
-        className="m-auto bg-slate-100 mt-[120px] p-2 shadow-lg bg-gradient-to-r from-[#FFF] to-[#dbeafe] rounded-lg w-11/12"
-      >
-        <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+        className="m-auto bg-slate-100 mt-[120px] p-2 shadow-lg bg-gradient-to-r from-[#FFF] to-[#dbeafe] rounded-lg w-11/12" 
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}
+      > 
         <div className="absolute" style={{
           top: "90px",   // Y-coordinate
           left: "330px",  // X-coordinate

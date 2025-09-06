@@ -84,17 +84,15 @@ const ChairPerson: React.FC = () => {
 
   return (
     
-  <div className="flex justify-center items-center min-h-screen mt-16">
-        <style>{`
-          body {
-            background-image: url('/assets/Wave.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-attachment: fixed;
-            background-size: cover;
-            background-color: transparent;
-          }
-        `}</style>
+  <div className="flex justify-center items-center min-h-screen mt-16" 
+      style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent", 
+      }}> 
         
         {/* White rounded container aligned to right of sidebar */}
       <div className="max-w-6xl p-8 bg-white rounded-2xl !rounded-2xl shadow-lg w-full" style={{ borderRadius: '0.5rem' }}>

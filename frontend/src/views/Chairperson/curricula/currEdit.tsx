@@ -106,17 +106,17 @@ const EditCurriculum: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-fixed">
-      <style>{`
-        body {
-          background-image: url('/assets/Wave.png');
-          background-repeat: no-repeat;
-          background-position: top;
-          background-attachment: fixed;
-          background-size: cover;
-          background-color: transparent;
-        }
-      `}</style>
+    <div className="min-h-screen flex items-center justify-center bg-no-repeat bg-top bg-fixed"
+    style={{
+        backgroundImage: `url(/assets/Wave.png)`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundColor: "transparent",
+        minHeight: "100vh" // ensures it fills the screen
+      }}
+    > 
       {/* Import Nav + Sidebar */}
       <ChairpersonNav
         user={user}

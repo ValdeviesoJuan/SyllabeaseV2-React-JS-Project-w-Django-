@@ -44,7 +44,7 @@ const DLUpdate: React.FC = () => {
       <div
         className="flex-1 min-h-screen p-4 mt-14"
         style={{
-          backgroundImage: 'url("/assets/Wave.png")',
+          backgroundImage: 'url(/assets/Wave.png)',
           backgroundRepeat: "no-repeat",
           backgroundPosition: "top",
           backgroundAttachment: "fixed",
